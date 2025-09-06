@@ -15,8 +15,10 @@ import {
   Calendar,
   DollarSign
 } from 'lucide-react';
+import { useLanguage } from '@/contexts/language-context';
 
 export function ClientChartCard() {
+  const { t } = useLanguage();
   const [selectedChart, setSelectedChart] = useState('portfolio');
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -28,9 +30,9 @@ export function ClientChartCard() {
   };
 
   const chartTypes = [
-    { id: 'portfolio', name: 'Portfolio Performance', icon: LineChart },
-    { id: 'allocation', name: 'Asset Allocation', icon: PieChart },
-    { id: 'returns', name: 'Monthly Returns', icon: BarChart3 },
+    { id: 'portfolio', name: t('client.dashboard.portfolio_performance'), icon: LineChart },
+    { id: 'allocation', name: t('client.dashboard.asset_allocation'), icon: PieChart },
+    { id: 'returns', name: t('client.dashboard.monthly_returns'), icon: BarChart3 },
   ];
 
   // Chart data configurations
@@ -38,7 +40,7 @@ export function ClientChartCard() {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     series: [
       {
-        label: 'Portfolio Value',
+        label: t('client.dashboard.portfolio_value'),
         data: [24000, 24500, 25200, 24800, 25430, 25800],
         borderColor: '#3B82F6',
         backgroundColor: '#3B82F620',
@@ -89,13 +91,13 @@ export function ClientChartCard() {
   const getChartTitle = () => {
     switch (selectedChart) {
       case 'portfolio':
-        return 'Portfolio Performance';
+        return t('client.dashboard.portfolio_performance');
       case 'allocation':
-        return 'Asset Allocation';
+        return t('client.dashboard.asset_allocation');
       case 'returns':
-        return 'Monthly Returns';
+        return t('client.dashboard.monthly_returns');
       default:
-        return 'Portfolio Performance';
+        return t('client.dashboard.portfolio_performance');
     }
   };
 
@@ -108,20 +110,20 @@ export function ClientChartCard() {
             <div>
               <CardTitle className="flex items-center">
                 <BarChart3 className="h-5 w-5 mr-2" />
-                Investment Analytics
+                {t('client.dashboard.investment_analytics')}
               </CardTitle>
               <CardDescription>
-                Visualize your portfolio performance and asset allocation
+                {t('client.dashboard.visualize_portfolio')}
               </CardDescription>
             </div>
             <div className="flex space-x-2">
               <Button variant="outline" size="sm" onClick={handleRefresh} disabled={isRefreshing}>
                 <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
-                Refresh
+                {t('client.dashboard.refresh')}
               </Button>
               <Button variant="outline" size="sm">
                 <Download className="h-4 w-4 mr-2" />
-                Export
+                {t('client.dashboard.export')}
               </Button>
             </div>
           </div>
@@ -165,9 +167,9 @@ export function ClientChartCard() {
                 <TrendingUp className="h-6 w-6 text-green-600" />
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-600">Best Month</p>
-                <p className="text-2xl font-bold text-gray-900">March</p>
-                <p className="text-sm text-green-600">+2.9% return</p>
+                <p className="text-sm font-medium text-gray-600">{t('client.dashboard.best_month')}</p>
+                <p className="text-2xl font-bold text-gray-900">Marzo</p>
+                <p className="text-sm text-green-600">+2.9% {t('client.dashboard.return')}</p>
               </div>
             </div>
           </CardContent>
@@ -180,9 +182,9 @@ export function ClientChartCard() {
                 <TrendingDown className="h-6 w-6 text-red-600" />
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-600">Worst Month</p>
-                <p className="text-2xl font-bold text-gray-900">April</p>
-                <p className="text-sm text-red-600">-1.6% return</p>
+                <p className="text-sm font-medium text-gray-600">{t('client.dashboard.worst_month')}</p>
+                <p className="text-2xl font-bold text-gray-900">Abril</p>
+                <p className="text-sm text-red-600">-1.6% {t('client.dashboard.return')}</p>
               </div>
             </div>
           </CardContent>
@@ -195,9 +197,9 @@ export function ClientChartCard() {
                 <DollarSign className="h-6 w-6 text-blue-600" />
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-600">Total Invested</p>
+                <p className="text-sm font-medium text-gray-600">{t('client.dashboard.total_invested')}</p>
                 <p className="text-2xl font-bold text-gray-900">$23,600</p>
-                <p className="text-sm text-blue-600">Initial capital</p>
+                <p className="text-sm text-blue-600">Capital inicial</p>
               </div>
             </div>
           </CardContent>

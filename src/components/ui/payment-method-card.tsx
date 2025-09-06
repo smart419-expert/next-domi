@@ -102,13 +102,13 @@ export function PaymentMethodCard({
   };
 
   return (
-    <Card>
+    <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
       <CardHeader>
-        <CardTitle className="flex items-center">
+        <CardTitle className="flex items-center text-gray-900 dark:text-white">
           <method.icon className={`h-5 w-5 mr-2 ${method.color.replace('bg-', 'text-')}`} />
           {method.name} Payment
         </CardTitle>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           {method.description} - {formatCurrency(amount)}
         </p>
       </CardHeader>
@@ -117,12 +117,12 @@ export function PaymentMethodCard({
           {!paymentLink ? (
             // Initial state - create invoice button
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
                 <method.icon className={`h-8 w-8 ${method.color.replace('bg-', 'text-')}`} />
               </div>
               <div>
-                <h3 className="text-lg font-medium mb-2">Create Payment</h3>
-                <p className="text-gray-500 mb-4">
+                <h3 className="text-lg font-medium mb-2 text-gray-900 dark:text-white">Create Payment</h3>
+                <p className="text-gray-500 dark:text-gray-400 mb-4">
                   Generate a payment link and QR code for {method.name}
                 </p>
                 <Button

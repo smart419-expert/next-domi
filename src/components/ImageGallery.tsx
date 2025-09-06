@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { useLanguage } from '@/contexts/language-context';
 import { 
   Image as ImageIcon, 
   Calendar, 
@@ -69,6 +70,7 @@ export function ImageGallery({
   filterTags = [],
   onFilterChange,
 }: ImageGalleryProps) {
+  const { t } = useLanguage();
   const [selectedImage, setSelectedImage] = useState<ImageItem | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -242,19 +244,19 @@ export function ImageGallery({
 
   if (images.length === 0) {
     return (
-      <Card className={`${className} bg-white/80 backdrop-blur-sm border-0 shadow-lg`}>
+      <Card className={`${className} bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 dark:border-gray-700 shadow-lg`}>
         <CardHeader>
-          <CardTitle className="flex items-center">
+          <CardTitle className="flex items-center text-gray-900 dark:text-white">
             <ImageIcon className="h-5 w-5 mr-2" />
             {title}
           </CardTitle>
-          <CardDescription>{description}</CardDescription>
+          <CardDescription className="text-gray-600 dark:text-gray-300">{description}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col items-center justify-center py-12 text-center">
-            <FileImage className="h-12 w-12 text-gray-400 mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No Images Yet</h3>
-            <p className="text-gray-500 max-w-sm mb-6">
+            <FileImage className="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No Images Yet</h3>
+            <p className="text-gray-500 dark:text-gray-400 max-w-sm mb-6">
               Upload your first image to get started. Images will appear here once uploaded.
             </p>
             {showUploadButton && (
@@ -275,8 +277,8 @@ export function ImageGallery({
 
   return (
     <Card 
-      className={`${className} bg-white/80 backdrop-blur-sm border-0 shadow-lg transition-all duration-300 ${
-        isDragOver ? 'ring-2 ring-blue-500 ring-offset-2 bg-blue-50/80' : ''
+      className={`${className} bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-0 dark:border-gray-700 shadow-lg transition-all duration-300 ${
+        isDragOver ? 'ring-2 ring-blue-500 ring-offset-2 bg-blue-50/80 dark:bg-blue-900/20' : ''
       }`}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
@@ -285,11 +287,11 @@ export function ImageGallery({
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
-            <CardTitle className="flex items-center">
+            <CardTitle className="flex items-center text-gray-900 dark:text-white">
               <ImageIcon className="h-5 w-5 mr-2" />
               {title}
             </CardTitle>
-            <CardDescription>{description}</CardDescription>
+            <CardDescription className="text-gray-600 dark:text-gray-300">{description}</CardDescription>
           </div>
           <div className="flex items-center space-x-2">
             {onViewModeChange && (
@@ -318,7 +320,7 @@ export function ImageGallery({
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
               >
                 <Upload className="h-4 w-4 mr-2" />
-                {isUploading ? 'Uploading...' : 'Upload'}
+                {isUploading ? t('gallery.uploading') : t('gallery.upload')}
               </Button>
             )}
           </div>
@@ -328,13 +330,13 @@ export function ImageGallery({
         <div className="flex flex-col sm:flex-row gap-4 mt-4">
           {onSearchChange && (
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
               <input
                 type="text"
                 placeholder="Search images..."
                 value={searchTerm}
                 onChange={(e) => onSearchChange(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               />
             </div>
           )}
@@ -345,7 +347,11 @@ export function ImageGallery({
                 <Badge
                   key={tag}
                   variant={filterTags.includes(tag) ? 'default' : 'outline'}
-                  className="cursor-pointer"
+                  className={`cursor-pointer ${
+                    filterTags.includes(tag) 
+                      ? 'bg-blue-600 dark:bg-blue-500 text-white' 
+                      : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  }`}
                   onClick={() => {
                     const newTags = filterTags.includes(tag)
                       ? filterTags.filter(t => t !== tag)
@@ -375,8 +381,8 @@ export function ImageGallery({
 
         {filteredImages.length === 0 ? (
           <div className="text-center py-8">
-            <Search className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-            <p className="text-gray-500">No images found matching your search.</p>
+            <Search className="h-8 w-8 text-gray-400 dark:text-gray-500 mx-auto mb-2" />
+            <p className="text-gray-500 dark:text-gray-400">No images found matching your search.</p>
           </div>
         ) : (
           <div className={cn(
@@ -394,7 +400,7 @@ export function ImageGallery({
                 }}
                 data-image-id={image.id}
                 className={cn(
-                  'group relative bg-white/90 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-blue-200 hover:scale-[1.02]',
+                  'group relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl border border-white/20 dark:border-gray-700/50 overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-blue-200 dark:hover:border-blue-400 hover:scale-[1.02]',
                   viewMode === 'list' && 'flex'
                 )}
               >
@@ -445,18 +451,18 @@ export function ImageGallery({
                   'p-4',
                   viewMode === 'list' && 'flex-1'
                 )}>
-                  <h3 className="font-medium text-gray-900 truncate">{image.title}</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white truncate">{image.title}</h3>
                   {image.description && (
-                    <p className="text-sm text-gray-500 mt-1 line-clamp-2">{image.description}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">{image.description}</p>
                   )}
                   
                   <div className="flex items-center justify-between mt-2">
-                    <div className="flex items-center text-xs text-gray-500">
+                    <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
                       <Calendar className="h-3 w-3 mr-1" />
                       {formatDate(image.uploadDate)}
                     </div>
                     {image.size && (
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
                         {formatFileSize(image.size)}
                       </span>
                     )}
@@ -465,12 +471,12 @@ export function ImageGallery({
                   {image.tags && image.tags.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-2">
                       {image.tags.slice(0, 3).map(tag => (
-                        <Badge key={tag} variant="outline" className="text-xs">
+                        <Badge key={tag} variant="outline" className="text-xs border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
                           {tag}
                         </Badge>
                       ))}
                       {image.tags.length > 3 && (
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="outline" className="text-xs border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
                           +{image.tags.length - 3}
                         </Badge>
                       )}

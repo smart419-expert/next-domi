@@ -133,30 +133,11 @@ export function RoleManagement() {
                     <Select
                       value={user.role}
                       onValueChange={(value: UserRole) => handleRoleChange(user.id, value)}
+                      className="w-32"
                     >
-                      <SelectTrigger className="w-32">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="admin">
-                          <div className="flex items-center space-x-2">
-                            <Shield className="h-4 w-4" />
-                            <span>Admin</span>
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="agent">
-                          <div className="flex items-center space-x-2">
-                            <UserCheck className="h-4 w-4" />
-                            <span>Agent</span>
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="viewer">
-                          <div className="flex items-center space-x-2">
-                            <Eye className="h-4 w-4" />
-                            <span>Viewer</span>
-                          </div>
-                        </SelectItem>
-                      </SelectContent>
+                      <option value="admin">Admin</option>
+                      <option value="agent">Agent</option>
+                      <option value="viewer">Viewer</option>
                     </Select>
                     <Button
                       size="sm"

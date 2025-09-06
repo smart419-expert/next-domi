@@ -4,7 +4,7 @@ import React, { useState, useRef } from 'react';
 import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select } from '@/components/ui/select';
 import { Download, Upload, BarChart3, TrendingUp } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -151,14 +151,9 @@ export function DynamicChart({ data: initialData, onDataChange, className }: Dyn
             Investment Performance
           </CardTitle>
           <div className="flex items-center gap-2">
-            <Select value={chartType} onValueChange={(value: 'line' | 'area') => setChartType(value)}>
-              <SelectTrigger className="w-32">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="line">Line Chart</SelectItem>
-                <SelectItem value="area">Area Chart</SelectItem>
-              </SelectContent>
+            <Select value={chartType} onValueChange={(value: 'line' | 'area') => setChartType(value)} className="w-32">
+              <option value="line">Line Chart</option>
+              <option value="area">Area Chart</option>
             </Select>
             <Button onClick={loadSampleData} variant="outline" size="sm">
               <BarChart3 className="h-4 w-4 mr-2" />

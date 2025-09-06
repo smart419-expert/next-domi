@@ -244,6 +244,29 @@ body {
   }
 }
 
+/* Light mode styles */
+.light {
+  --background: 255 255 255; /* White */
+  --foreground: 15 23 42; /* Dark navy */
+  --muted: 248 250 252; /* Light gray */
+  --muted-foreground: 100 116 139; /* Medium gray */
+  --border: 226 232 240; /* Light border */
+  --input: 255 255 255; /* White input */
+  --ring: 59 130 246; /* Blue for focus rings */
+}
+
+.light body {
+  background-color: rgb(var(--background)) !important;
+  color: rgb(var(--foreground)) !important;
+}
+
+.light .card, .light [class*="card"] {
+  background-color: rgb(var(--muted)) !important;
+  border-color: rgb(var(--border)) !important;
+  color: rgb(var(--foreground)) !important;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
 /* Dark mode styles */
 .dark {
   --background: 15 23 42; /* Dark navy */

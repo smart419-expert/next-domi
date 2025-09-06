@@ -187,17 +187,13 @@ export function ChatSettings({ onSettingsChange, className }: ChatSettingsProps)
                   value={settings.provider}
                   onValueChange={handleProviderChange}
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a chat provider" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="mock">Mock Chat (Built-in)</SelectItem>
-                    {CHAT_PROVIDERS.map((provider) => (
-                      <SelectItem key={provider.id} value={provider.id}>
-                        {provider.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
+                  <option value="">Select a chat provider</option>
+                  <option value="mock">Mock Chat (Built-in)</option>
+                  {CHAT_PROVIDERS.map((provider) => (
+                    <option key={provider.id} value={provider.id}>
+                      {provider.name}
+                    </option>
+                  ))}
                 </Select>
                 {selectedProvider && (
                   <p className="text-sm text-gray-500">

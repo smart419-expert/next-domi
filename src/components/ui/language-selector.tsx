@@ -8,13 +8,6 @@ import { Button } from './button';
 const languages = [
   { code: 'en' as const, name: 'English', flag: '🇺🇸' },
   { code: 'es' as const, name: 'Español', flag: '🇪🇸' },
-  { code: 'fr' as const, name: 'Français', flag: '🇫🇷' },
-  { code: 'de' as const, name: 'Deutsch', flag: '🇩🇪' },
-  { code: 'it' as const, name: 'Italiano', flag: '🇮🇹' },
-  { code: 'pt' as const, name: 'Português', flag: '🇵🇹' },
-  { code: 'zh' as const, name: '中文', flag: '🇨🇳' },
-  { code: 'ja' as const, name: '日本語', flag: '🇯🇵' },
-  { code: 'ko' as const, name: '한국어', flag: '🇰🇷' },
 ];
 
 export function LanguageSelector() {
@@ -37,7 +30,10 @@ export function LanguageSelector() {
         {languages.map((lang) => (
           <button
             key={lang.code}
-            onClick={() => setLanguage(lang.code)}
+            onClick={() => {
+              console.log('Language selector clicked:', lang.code);
+              setLanguage(lang.code);
+            }}
             className={`w-full flex items-center px-3 py-2 text-sm text-left hover:bg-slate-50 first:rounded-t-lg last:rounded-b-lg ${
               language === lang.code ? 'bg-blue-50 text-blue-700' : 'text-slate-700'
             }`}

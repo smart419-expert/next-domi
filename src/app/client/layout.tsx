@@ -14,7 +14,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
       {/* Sidebar */}
       <ClientSidebar 
         isOpen={isSidebarOpen}
@@ -30,7 +30,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
         />
 
         {/* Main Content */}
-        <main className="flex-1">
+        <main className="flex-1 bg-white dark:bg-gray-900">
           {children}
         </main>
 

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { VirginMoneyLogo } from '@/components/ui/virgin-money-logo';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -18,6 +19,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/language-context';
 
 interface ClientSidebarProps {
   isOpen: boolean;
@@ -25,47 +27,49 @@ interface ClientSidebarProps {
   className?: string;
 }
 
-const navigation = [
+const getNavigation = (t: (key: string) => string) => [
   {
-    name: 'Dashboard',
+    name: t('client.dashboard.title'),
     href: '/client/dashboard',
     icon: LayoutDashboard,
   },
   {
-    name: 'Documents',
+    name: t('client.dashboard.documents'),
     href: '/client/documents',
     icon: FileText,
   },
   {
-    name: 'Messages',
+    name: t('client.dashboard.messages'),
     href: '/client/messages',
     icon: MessageSquare,
   },
   {
-    name: 'Payments',
+    name: t('client.dashboard.payments'),
     href: '/client/payments',
     icon: CreditCard,
   },
   {
-    name: 'Schedule',
+    name: t('client.dashboard.schedule'),
     href: '/client/schedule',
     icon: Calendar,
   },
   {
-    name: 'Settings',
+    name: t('client.dashboard.settings'),
     href: '/client/settings',
     icon: Settings,
   },
   {
-    name: 'Help',
+    name: t('client.dashboard.help'),
     href: '/client/help',
     icon: HelpCircle,
   },
 ];
 
 export function ClientSidebar({ isOpen, onClose, className }: ClientSidebarProps) {
+  const { t } = useLanguage();
   const pathname = usePathname();
   const router = useRouter();
+  const navigation = getNavigation(t);
 
   const handleNavigation = (href: string) => {
     router.push(href);
@@ -94,12 +98,11 @@ export function ClientSidebar({ isOpen, onClose, className }: ClientSidebarProps
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-gray-200">
-            <div className="flex items-center space-x-2">
-              <div className="p-2 bg-blue-600 rounded-lg">
-                <LayoutDashboard className="h-5 w-5 text-white" />
-              </div>
-              <span className="text-lg font-semibold text-gray-900">Client Portal</span>
-            </div>
+            <VirginMoneyLogo 
+              size="md" 
+              text="portal" 
+              onClick={() => router.push('/')}
+            />
             <Button
               variant="ghost"
               size="sm"

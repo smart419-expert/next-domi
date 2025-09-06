@@ -64,13 +64,13 @@ export function WalletSelector({
   className = ""
 }: WalletSelectorProps) {
   return (
-    <Card className={className}>
+    <Card className={`bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 ${className}`}>
       <CardHeader>
-        <CardTitle className="flex items-center">
+        <CardTitle className="flex items-center text-gray-900 dark:text-white">
           <Wallet className="h-5 w-5 mr-2" />
           {title}
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-gray-600 dark:text-gray-300">
           {description}
         </CardDescription>
       </CardHeader>
@@ -80,8 +80,8 @@ export function WalletSelector({
             <button
               key={wallet.id}
               onClick={() => onWalletSelect(wallet.id)}
-              className={`p-6 border-2 rounded-lg text-center transition-all duration-200 ${wallet.color} ${wallet.hoverColor} ${
-                selectedWallet === wallet.id ? 'ring-2 ring-blue-500 ring-offset-2' : ''
+              className={`p-6 border-2 rounded-lg text-center transition-all duration-200 ${wallet.color} dark:${wallet.color.replace('50', '900/20').replace('200', '800')} ${wallet.hoverColor} dark:hover:bg-opacity-30 ${
+                selectedWallet === wallet.id ? 'ring-2 ring-blue-500 dark:ring-blue-400 ring-offset-2' : ''
               }`}
             >
               <div className="text-2xl font-bold mb-2">{wallet.icon}</div>

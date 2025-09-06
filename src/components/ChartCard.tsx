@@ -15,6 +15,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Clock, BarChart3 } from 'lucide-react';
+import { useLanguage } from '@/contexts/language-context';
 
 // Register Chart.js components
 ChartJS.register(
@@ -54,6 +55,7 @@ export function ChartCard({
   className = "",
   height = 300
 }: ChartCardProps) {
+  const { t } = useLanguage();
   // Check if there's any data
   const hasData = config.series.some(series => series.data.length > 0);
   
@@ -164,9 +166,9 @@ export function ChartCard({
     const now = new Date();
     const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
     
-    if (diffInMinutes < 1) return 'Just now';
-    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
-    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h ago`;
+    if (diffInMinutes < 1) return 'Ahora mismo';
+    if (diffInMinutes < 60) return `hace ${diffInMinutes}m`;
+    if (diffInMinutes < 1440) return `hace ${Math.floor(diffInMinutes / 60)}h`;
     return date.toLocaleDateString();
   };
 
@@ -178,16 +180,16 @@ export function ChartCard({
           {title}
         </CardTitle>
         <CardDescription>
-          Interactive chart visualization
+          {t('client.dashboard.interactive_chart')}
         </CardDescription>
       </CardHeader>
       <CardContent>
         {!hasData ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <BarChart3 className="h-12 w-12 text-gray-400 mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No Data Available</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Sin Datos Disponibles</h3>
             <p className="text-gray-500 max-w-sm">
-              There's no data to display in this chart. Data will appear here once it becomes available.
+              No hay datos para mostrar en este gráfico. Los datos aparecerán aquí una vez que estén disponibles.
             </p>
           </div>
         ) : (

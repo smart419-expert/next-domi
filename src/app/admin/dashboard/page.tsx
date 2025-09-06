@@ -1,27 +1,31 @@
+'use client';
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { AppLayout, PageTitle } from '@/components/layout';
 import { Users, DollarSign, MessageSquare, FileText, TrendingUp, Activity } from 'lucide-react';
 import Link from 'next/link';
+import { useLanguage } from '@/contexts/language-context';
 
 export default function DashboardPage() {
+  const { t } = useLanguage();
   const stats = [
     {
-      title: 'Total Clients',
+      title: t('dashboard.total_clients'),
       value: '1,234',
       change: '+12%',
       changeType: 'positive' as const,
       icon: Users,
     },
     {
-      title: 'Total Revenue',
+      title: t('dashboard.total_revenue'),
       value: '$45,231',
       change: '+8.2%',
       changeType: 'positive' as const,
       icon: DollarSign,
     },
     {
-      title: 'Active Conversations',
+      title: 'Conversaciones Activas',
       value: '89',
       change: '+23%',
       changeType: 'positive' as const,

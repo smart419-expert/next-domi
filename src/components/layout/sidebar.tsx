@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { VirginMoneyLogo } from '@/components/ui/virgin-money-logo';
 import { Button } from '@/components/ui/button';
 import { 
   LayoutDashboard, 
@@ -69,6 +70,7 @@ export function Sidebar({
   className 
 }: SidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
 
   return (
     <>
@@ -97,16 +99,11 @@ export function Sidebar({
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-slate-200 bg-white">
           {!isCollapsed && (
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">G</span>
-              </div>
-              <div>
-                <span className="text-lg font-semibold text-slate-900">
-                  VApps Platform
-                </span>
-              </div>
-            </div>
+            <VirginMoneyLogo 
+              size="md" 
+              text="platform" 
+              onClick={() => router.push('/')}
+            />
           )}
           
           <Button

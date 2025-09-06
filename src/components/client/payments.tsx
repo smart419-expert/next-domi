@@ -24,44 +24,50 @@ import {
   Smartphone,
   Wallet
 } from 'lucide-react';
+import { useLanguage } from '@/contexts/language-context';
 
 export function Payments() {
+  const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [showNewPayment, setShowNewPayment] = useState(false);
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState('');
+  const [withdrawAmount, setWithdrawAmount] = useState('');
+  const [withdrawDescription, setWithdrawDescription] = useState('');
+  const [withdrawMethod, setWithdrawMethod] = useState('');
 
   const walletOptions = [
     {
       id: 'paypal',
       name: 'PayPal',
       icon: 'PP',
-      color: 'bg-blue-50 border-blue-200 text-blue-700',
-      hoverColor: 'hover:bg-blue-100',
+      color: 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300',
+      hoverColor: 'hover:bg-blue-100 dark:hover:bg-blue-900/30',
       description: 'Pay securely with PayPal'
     },
     {
       id: 'bank',
       name: 'Bank Transfer',
       icon: '🏦',
-      color: 'bg-gray-50 border-gray-200 text-gray-700',
-      hoverColor: 'hover:bg-gray-100',
+      color: 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300',
+      hoverColor: 'hover:bg-gray-100 dark:hover:bg-gray-700',
       description: 'Direct bank transfer'
     },
     {
       id: 'zelle',
       name: 'Zelle',
       icon: 'Z',
-      color: 'bg-purple-50 border-purple-200 text-purple-700',
-      hoverColor: 'hover:bg-purple-100',
+      color: 'bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-300',
+      hoverColor: 'hover:bg-purple-100 dark:hover:bg-purple-900/30',
       description: 'Send money with Zelle'
     },
     {
       id: 'cashapp',
       name: 'Cash App',
       icon: '$',
-      color: 'bg-green-50 border-green-200 text-green-700',
-      hoverColor: 'hover:bg-green-100',
+      color: 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-700 dark:text-green-300',
+      hoverColor: 'hover:bg-green-100 dark:hover:bg-green-900/30',
       description: 'Pay with Cash App'
     }
   ];
@@ -186,59 +192,93 @@ export function Payments() {
 
   const netAmount = totalDeposits - totalWithdrawals;
 
+  const handleWithdraw = () => {
+    if (!withdrawAmount || !withdrawMethod || !withdrawDescription) {
+      alert('Please fill in all fields');
+      return;
+    }
+    
+    const amount = parseFloat(withdrawAmount);
+    if (amount <= 0) {
+      alert('Please enter a valid amount');
+      return;
+    }
+    
+    if (amount > netAmount) {
+      alert('Insufficient funds for withdrawal');
+      return;
+    }
+    
+    // Here you would typically make an API call to process the withdrawal
+    console.log('Processing withdrawal:', {
+      amount,
+      method: withdrawMethod,
+      description: withdrawDescription
+    });
+    
+    // Reset form and close modal
+    setWithdrawAmount('');
+    setWithdrawDescription('');
+    setWithdrawMethod('');
+    setShowWithdrawModal(false);
+    
+    // Show success message
+    alert('Withdrawal request submitted successfully!');
+  };
+
   return (
     <div className="space-y-6">
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Deposits</CardTitle>
-            <TrendingUp className="h-4 w-4 text-green-600" />
+            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">Total de Depósitos</CardTitle>
+            <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-600">
+            <div className="text-2xl font-bold text-green-600 dark:text-green-400">
               ${totalDeposits.toLocaleString()}
             </div>
-            <p className="text-xs text-gray-500">All time</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">De todos los tiempos</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Withdrawals</CardTitle>
-            <TrendingDown className="h-4 w-4 text-red-600" />
+            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">Total de Retiros</CardTitle>
+            <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-red-600">
+            <div className="text-2xl font-bold text-red-600 dark:text-red-400">
               ${totalWithdrawals.toLocaleString()}
             </div>
-            <p className="text-xs text-gray-500">All time</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">De todos los tiempos</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Net Amount</CardTitle>
-            <DollarSign className="h-4 w-4 text-blue-600" />
+            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">Cantidad Neta</CardTitle>
+            <DollarSign className="h-4 w-4 text-blue-600 dark:text-blue-400" />
           </CardHeader>
           <CardContent>
-            <div className={`text-2xl font-bold ${netAmount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+            <div className={`text-2xl font-bold ${netAmount >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
               ${netAmount.toLocaleString()}
             </div>
-            <p className="text-xs text-gray-500">Net position</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Posición neta</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Wallet Selection */}
-      <Card>
+      <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
         <CardHeader>
-          <CardTitle className="flex items-center">
+          <CardTitle className="flex items-center text-gray-900 dark:text-white">
             <Wallet className="h-5 w-5 mr-2" />
-            Choose Payment Method
+            Elegir Método de Pago
           </CardTitle>
-          <CardDescription>
-            Select your preferred payment method to continue
+          <CardDescription className="text-gray-600 dark:text-gray-300">
+            Selecciona tu método de pago preferido para continuar
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -247,8 +287,8 @@ export function Payments() {
               <button
                 key={wallet.id}
                 onClick={() => setSelectedWallet(wallet.id)}
-                className={`p-6 border-2 rounded-lg text-center transition-all duration-200 ${wallet.color} ${wallet.hoverColor} ${
-                  selectedWallet === wallet.id ? 'ring-2 ring-blue-500 ring-offset-2' : ''
+                className={`p-6 border-2 rounded-lg text-center transition-all duration-200 ${wallet.color} dark:${wallet.color.replace('50', '900/20').replace('200', '800')} ${wallet.hoverColor} dark:hover:bg-opacity-30 ${
+                  selectedWallet === wallet.id ? 'ring-2 ring-blue-500 dark:ring-blue-400 ring-offset-2' : ''
                 }`}
               >
                 <div className="text-2xl font-bold mb-2">{wallet.icon}</div>
@@ -261,24 +301,32 @@ export function Payments() {
       </Card>
 
       {/* Payment Actions */}
-      <Card>
+      <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="flex items-center">
+              <CardTitle className="flex items-center text-gray-900 dark:text-white">
                 <CreditCard className="h-5 w-5 mr-2" />
                 Payment Management
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-gray-600 dark:text-gray-300">
                 Manage your payments and view transaction history
               </CardDescription>
             </div>
             <div className="flex space-x-2">
-              <Button variant="outline">
+              <Button variant="outline" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
                 <Download className="h-4 w-4 mr-2" />
                 Export
               </Button>
-              <Button onClick={() => setShowNewPayment(true)} disabled={!selectedWallet}>
+              <Button 
+                variant="outline" 
+                onClick={() => setShowWithdrawModal(true)}
+                className="text-red-600 dark:text-red-400 border-red-200 dark:border-red-800 hover:bg-red-50 dark:hover:bg-red-900/20"
+              >
+                <ArrowUpRight className="h-4 w-4 mr-2" />
+                Withdraw
+              </Button>
+              <Button onClick={() => setShowNewPayment(true)} disabled={!selectedWallet} className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
                 <Plus className="h-4 w-4 mr-2" />
                 New Payment
               </Button>
@@ -288,36 +336,52 @@ export function Payments() {
         <CardContent>
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
               <Input
                 placeholder="Search payments..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               />
             </div>
             <div className="flex gap-2">
               <Button
                 variant={filterStatus === 'all' ? 'default' : 'outline'}
                 onClick={() => setFilterStatus('all')}
+                className={filterStatus === 'all' 
+                  ? 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white' 
+                  : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                }
               >
                 All
               </Button>
               <Button
                 variant={filterStatus === 'completed' ? 'default' : 'outline'}
                 onClick={() => setFilterStatus('completed')}
+                className={filterStatus === 'completed' 
+                  ? 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white' 
+                  : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                }
               >
                 Completed
               </Button>
               <Button
                 variant={filterStatus === 'pending' ? 'default' : 'outline'}
                 onClick={() => setFilterStatus('pending')}
+                className={filterStatus === 'pending' 
+                  ? 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white' 
+                  : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                }
               >
                 Pending
               </Button>
               <Button
                 variant={filterStatus === 'failed' ? 'default' : 'outline'}
                 onClick={() => setFilterStatus('failed')}
+                className={filterStatus === 'failed' 
+                  ? 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white' 
+                  : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                }
               >
                 Failed
               </Button>
@@ -448,20 +512,107 @@ export function Payments() {
         </div>
       )}
 
+      {/* Withdraw Modal */}
+      {showWithdrawModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <Card className="w-full max-w-md mx-4">
+            <CardHeader>
+              <CardTitle className="flex items-center text-red-600">
+                <ArrowUpRight className="h-5 w-5 mr-2" />
+                Withdraw Funds
+              </CardTitle>
+              <CardDescription>
+                Withdraw money from your account balance
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {/* Available Balance Display */}
+              <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-sm font-medium text-green-800">Available Balance</div>
+                    <div className="text-lg font-bold text-green-900">
+                      ${netAmount.toLocaleString()}
+                    </div>
+                  </div>
+                  <DollarSign className="h-8 w-8 text-green-600" />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Withdrawal Amount</label>
+                <Input
+                  type="number"
+                  placeholder="0.00"
+                  step="0.01"
+                  value={withdrawAmount}
+                  onChange={(e) => setWithdrawAmount(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
+                <select
+                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                  value={withdrawMethod}
+                  onChange={(e) => setWithdrawMethod(e.target.value)}
+                >
+                  <option value="">Select payment method</option>
+                  {walletOptions.map((wallet) => (
+                    <option key={wallet.id} value={wallet.id}>
+                      {wallet.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <Input
+                  placeholder="Withdrawal description"
+                  value={withdrawDescription}
+                  onChange={(e) => setWithdrawDescription(e.target.value)}
+                />
+              </div>
+
+              <div className="flex space-x-2">
+                <Button 
+                  className="flex-1 bg-red-600 hover:bg-red-700"
+                  onClick={handleWithdraw}
+                >
+                  Process Withdrawal
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    setShowWithdrawModal(false);
+                    setWithdrawAmount('');
+                    setWithdrawDescription('');
+                    setWithdrawMethod('');
+                  }}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
       {/* Quick Actions */}
       <Card className="bg-blue-50 border-blue-200">
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-lg font-medium text-blue-900 mb-1">
-                Need Help with Payments?
+                {t('client.payments.need_help')}
               </h3>
               <p className="text-blue-700">
-                Contact our support team for assistance with payment processing.
+                {t('client.payments.contact_support_desc')}
               </p>
             </div>
             <Button className="bg-blue-600 hover:bg-blue-700">
-              Contact Support
+              {t('client.payments.contact_support')}
             </Button>
           </div>
         </CardContent>

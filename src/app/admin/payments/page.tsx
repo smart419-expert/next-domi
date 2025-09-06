@@ -237,27 +237,27 @@ export default function PaymentsPage() {
 
   return (
     <AppLayout>
-      <div className="min-h-screen bg-slate-100">
+      <div className="min-h-screen bg-slate-100 dark:bg-gray-900">
         {/* Page Title */}
         <div className="px-4 pt-4 pb-2">
-          <h1 className="text-2xl font-bold text-slate-900">Payments</h1>
-          <p className="text-slate-600">Manage your payments and account</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Payments</h1>
+          <p className="text-slate-600 dark:text-gray-300">Manage your payments and account</p>
         </div>
 
         {/* Blue Gradient Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-6 mx-4 rounded-lg">
+        <div className="bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-800 dark:to-blue-900 text-white px-4 py-6 mx-4 rounded-lg">
         {/* User Profile Section */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-              <BarChart3 className="h-6 w-6 text-blue-600" />
+            <div className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center">
+              <BarChart3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
             </div>
             <div>
               <div className="text-sm font-medium payment-header-text">{user.email}</div>
               <div className="text-xs payment-header-text opacity-90">{user.phone}</div>
             </div>
           </div>
-          <Button className="bg-yellow-500 hover:bg-yellow-600 text-black px-3 py-1 rounded-lg flex items-center space-x-1">
+          <Button className="bg-yellow-500 hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-700 text-black dark:text-white px-3 py-1 rounded-lg flex items-center space-x-1">
             <Crown className="h-4 w-4" />
             <span className="text-sm font-medium">{user.level}</span>
             <ArrowRight className="h-3 w-3" />
@@ -265,7 +265,7 @@ export default function PaymentsPage() {
         </div>
 
         {/* Balance Display */}
-        <div className="bg-blue-800 rounded-lg p-4">
+        <div className="bg-blue-800 dark:bg-blue-900 rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center space-x-2">
               <Wallet className="h-5 w-5 payment-balance-text" />
@@ -284,7 +284,7 @@ export default function PaymentsPage() {
             {quickActions.map((action) => (
               <Button
                 key={action.id}
-                className={`${action.color} hover:opacity-90 text-white h-20 flex flex-col items-center justify-center space-y-2 rounded-lg transition-all duration-200 hover:scale-105`}
+                className={`${action.color} hover:opacity-90 text-white h-20 flex flex-col items-center justify-center space-y-2 rounded-lg transition-all duration-200 hover:scale-105 dark:opacity-90 dark:hover:opacity-100`}
                 onClick={() => handleQuickAction(action.id)}
               >
                 <action.icon className="h-6 w-6" />
@@ -294,26 +294,26 @@ export default function PaymentsPage() {
           </div>
 
           {/* Account Records List */}
-          <Card className="mb-6 bg-white shadow-sm border border-slate-200">
+          <Card className="mb-6 bg-white dark:bg-gray-800 shadow-sm border border-slate-200 dark:border-gray-700">
             <CardContent className="p-0">
               {accountRecords.map((record, index) => (
                 <div
                   key={record.id}
-                  className={`flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors ${
-                    index !== accountRecords.length - 1 ? 'border-b border-slate-100' : ''
+                  className={`flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors ${
+                    index !== accountRecords.length - 1 ? 'border-b border-slate-100 dark:border-gray-700' : ''
                   }`}
                   onClick={() => handleAccountRecord(record.id)}
                 >
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center">
-                      <record.icon className="h-4 w-4 text-slate-600" />
+                    <div className="w-8 h-8 bg-slate-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                      <record.icon className="h-4 w-4 text-slate-600 dark:text-gray-300" />
                     </div>
                     <div>
-                      <div className="font-medium payment-content-text">{record.name}</div>
-                      <div className="text-xs text-slate-500">{record.description}</div>
+                      <div className="font-medium payment-content-text dark:text-white">{record.name}</div>
+                      <div className="text-xs text-slate-500 dark:text-gray-400">{record.description}</div>
                     </div>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-slate-400" />
+                  <ArrowRight className="h-4 w-4 text-slate-400 dark:text-gray-500" />
                 </div>
               ))}
             </CardContent>
@@ -565,21 +565,20 @@ export default function PaymentsPage() {
                 {/* Client Selection */}
                 <div className="space-y-2 mb-4">
                   <Label htmlFor="client">Select Client</Label>
-                  <Select value={clientId} onValueChange={(value) => {
-                    setClientId(value);
-                    const client = clients.find(c => c.id === value);
-                    setClientName(client?.name || '');
-                  }}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Choose a client" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {clients.map((client) => (
-                        <SelectItem key={client.id} value={client.id}>
-                          {client.name} ({client.email})
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
+                  <Select 
+                    value={clientId} 
+                    onValueChange={(value) => {
+                      setClientId(value);
+                      const client = clients.find(c => c.id === value);
+                      setClientName(client?.name || '');
+                    }}
+                  >
+                    <option value="">Choose a client</option>
+                    {clients.map((client) => (
+                      <option key={client.id} value={client.id}>
+                        {client.name} ({client.email})
+                      </option>
+                    ))}
                   </Select>
                 </div>
 
@@ -591,8 +590,8 @@ export default function PaymentsPage() {
                       <button
                         key={method.id}
                         onClick={() => setSelectedMethod(method.id)}
-                        className={`p-4 border-2 rounded-lg text-center transition-all duration-200 ${method.color} ${method.hoverColor} ${
-                          selectedMethod === method.id ? 'ring-2 ring-blue-500 ring-offset-2' : ''
+                        className={`p-4 border-2 rounded-lg text-center transition-all duration-200 ${method.color} dark:${method.color.replace('50', '900/20').replace('200', '800')} ${method.hoverColor} dark:hover:bg-opacity-30 ${
+                          selectedMethod === method.id ? 'ring-2 ring-blue-500 dark:ring-blue-400 ring-offset-2' : ''
                         }`}
                       >
                         <div className="text-2xl font-bold mb-2">{method.icon}</div>
@@ -605,9 +604,9 @@ export default function PaymentsPage() {
 
                 {/* Payment Summary */}
                 {amount > 0 && selectedClient && selectedMethod && (
-                  <div className="bg-gray-50 p-4 rounded-lg mb-4">
-                    <h4 className="font-medium mb-2">Payment Summary</h4>
-                    <div className="space-y-1 text-sm">
+                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg mb-4">
+                    <h4 className="font-medium mb-2 text-gray-900 dark:text-white">Payment Summary</h4>
+                    <div className="space-y-1 text-sm text-gray-700 dark:text-gray-300">
                       <div className="flex justify-between">
                         <span>Client:</span>
                         <span className="font-medium">{selectedClient.name}</span>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ChatWidget, ChatUser } from '@/components/ChatWidget';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/contexts/language-context';
 import { 
   MessageSquare, 
   Phone, 
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react';
 
 export function ClientChatWidget() {
+  const { t } = useLanguage();
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   // Mock user data - in a real app, this would come from your auth system
@@ -81,24 +83,24 @@ export function ClientChatWidget() {
         <Card className="hover:shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer bg-white/80 backdrop-blur-sm border-0 shadow-lg">
           <CardContent className="p-6 text-center">
             <Phone className="h-8 w-8 text-green-600 mx-auto mb-3" />
-            <h3 className="font-semibold text-gray-900 mb-2">Schedule Call</h3>
-            <p className="text-sm text-gray-500">Book a phone consultation with your advisor</p>
+            <h3 className="font-semibold text-gray-900 mb-2">{t('client.chat.schedule_call')}</h3>
+            <p className="text-sm text-gray-500">{t('client.chat.schedule_call_desc')}</p>
           </CardContent>
         </Card>
 
         <Card className="hover:shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer bg-white/80 backdrop-blur-sm border-0 shadow-lg">
           <CardContent className="p-6 text-center">
             <Video className="h-8 w-8 text-blue-600 mx-auto mb-3" />
-            <h3 className="font-semibold text-gray-900 mb-2">Video Meeting</h3>
-            <p className="text-sm text-gray-500">Start a video call with your team</p>
+            <h3 className="font-semibold text-gray-900 mb-2">{t('client.chat.video_meeting')}</h3>
+            <p className="text-sm text-gray-500">{t('client.chat.video_meeting_desc')}</p>
           </CardContent>
         </Card>
 
         <Card className="hover:shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer bg-white/80 backdrop-blur-sm border-0 shadow-lg">
           <CardContent className="p-6 text-center">
             <Mail className="h-8 w-8 text-purple-600 mx-auto mb-3" />
-            <h3 className="font-semibold text-gray-900 mb-2">Send Email</h3>
-            <p className="text-sm text-gray-500">Send a detailed message via email</p>
+            <h3 className="font-semibold text-gray-900 mb-2">{t('client.chat.send_email')}</h3>
+            <p className="text-sm text-gray-500">{t('client.chat.send_email_desc')}</p>
           </CardContent>
         </Card>
       </div>
@@ -109,20 +111,20 @@ export function ClientChatWidget() {
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-lg font-medium text-blue-900 mb-1">
-                Need Immediate Assistance?
+                {t('client.chat.need_assistance')}
               </h3>
               <p className="text-blue-700">
-                Our support team is available 24/7 for urgent matters.
+                {t('client.chat.support_available')}
               </p>
             </div>
             <div className="flex space-x-2">
               <Button className="bg-blue-600 hover:bg-blue-700 shadow-lg">
                 <Phone className="h-4 w-4 mr-2" />
-                Call Now
+                {t('client.chat.call_now')}
               </Button>
               <Button variant="outline" className="border-blue-300 text-blue-700 hover:bg-blue-100">
                 <Mail className="h-4 w-4 mr-2" />
-                Email
+                {t('client.chat.email')}
               </Button>
             </div>
           </div>

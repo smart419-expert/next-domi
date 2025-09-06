@@ -9,6 +9,7 @@ import { Menu, Bell, Search, Settings, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLayout } from './layout-context';
 import { useAuth } from '@/contexts/auth-context';
+import { useRouter } from 'next/navigation';
 
 interface HeaderProps {
   onMenuClick?: () => void;
@@ -20,6 +21,12 @@ export function Header({ onMenuClick, isSidebarOpen, className }: HeaderProps) {
   const [notifications, setNotifications] = React.useState(3);
   const { isSidebarCollapsed } = useLayout();
   const { user, logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    router.push('/');
+  };
 
   return (
     <header
@@ -110,7 +117,7 @@ export function Header({ onMenuClick, isSidebarOpen, className }: HeaderProps) {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={logout}
+                onClick={handleLogout}
                 className="text-slate-500 hover:text-slate-700"
                 aria-label="Logout"
               >

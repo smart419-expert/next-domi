@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
 import { useAuth } from '@/contexts/auth-context';
+import { useLanguage } from '@/contexts/language-context';
 import { 
   LogOut, 
   Menu, 
@@ -13,6 +14,9 @@ import {
   User,
   ChevronDown
 } from 'lucide-react';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { LanguageSelector } from '@/components/ui/language-selector';
+import { VirginMoneyLogo } from '@/components/ui/virgin-money-logo';
 import toast from 'react-hot-toast';
 
 interface ClientHeaderProps {
@@ -23,17 +27,18 @@ interface ClientHeaderProps {
 
 export function ClientHeader({ onMenuClick, isSidebarOpen, className }: ClientHeaderProps) {
   const { user, logout } = useAuth();
+  const { t } = useLanguage();
   const router = useRouter();
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   const handleLogout = () => {
     logout();
-    toast.success('Logged out successfully');
+    toast.success('Sesión cerrada exitosamente');
     router.push('/login');
   };
 
   return (
-    <header className={`bg-white border-b border-gray-200 shadow-sm ${className}`}>
+    <header className={`bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm ${className}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Left side - Logo and Menu */}
@@ -42,26 +47,25 @@ export function ClientHeader({ onMenuClick, isSidebarOpen, className }: ClientHe
               variant="ghost"
               size="sm"
               onClick={onMenuClick}
-              className="lg:hidden"
+              className="lg:hidden text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               <Menu className="h-5 w-5" />
             </Button>
             
-            <div className="flex items-center space-x-2">
-              <div className="p-2 bg-blue-600 rounded-lg">
-                <User className="h-6 w-6 text-white" />
-              </div>
-              <span className="text-xl font-bold text-gray-900">Client Portal</span>
-            </div>
+            <VirginMoneyLogo 
+              size="lg" 
+              text="portal" 
+              onClick={() => router.push('/')}
+            />
           </div>
 
-          {/* Right side - Notifications and User Menu */}
+          {/* Right side - Notifications, Theme Toggle and User Menu */}
           <div className="flex items-center space-x-4">
             {/* Notifications */}
             <Button
               variant="ghost"
               size="sm"
-              className="relative text-gray-500 hover:text-gray-700"
+              className="relative text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
             >
               <Bell className="h-5 w-5" />
               <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
@@ -69,12 +73,18 @@ export function ClientHeader({ onMenuClick, isSidebarOpen, className }: ClientHe
               </span>
             </Button>
 
+            {/* Theme Toggle */}
+            <ThemeToggle />
+
+            {/* Language Selector */}
+            <LanguageSelector />
+
             {/* User Menu */}
             <div className="relative">
               <Button
                 variant="ghost"
                 onClick={() => setShowUserMenu(!showUserMenu)}
-                className="flex items-center space-x-2 text-gray-700 hover:bg-gray-50"
+                className="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
               >
                 <Avatar
                   name={user?.name || 'Client'}
@@ -82,35 +92,35 @@ export function ClientHeader({ onMenuClick, isSidebarOpen, className }: ClientHe
                   className="cursor-pointer"
                 />
                 <div className="hidden sm:block text-left">
-                  <div className="text-sm font-medium">{user?.name || 'Client User'}</div>
-                  <div className="text-xs text-gray-500">{user?.email || 'client@example.com'}</div>
+                  <div className="text-sm font-medium text-gray-900 dark:text-white">{user?.name || 'Usuario Cliente'}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">{user?.email || 'client@example.com'}</div>
                 </div>
                 <ChevronDown className="h-4 w-4" />
               </Button>
 
               {/* Dropdown Menu */}
               {showUserMenu && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
-                  <div className="px-4 py-2 border-b border-gray-100">
-                    <div className="text-sm font-medium text-gray-900">{user?.name || 'Client User'}</div>
-                    <div className="text-xs text-gray-500">{user?.email || 'client@example.com'}</div>
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 border border-gray-200 dark:border-gray-700">
+                  <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-700">
+                    <div className="text-sm font-medium text-gray-900 dark:text-white">{user?.name || 'Usuario Cliente'}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">{user?.email || 'client@example.com'}</div>
                   </div>
                   
                   <Button
                     variant="ghost"
-                    className="w-full justify-start text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    className="w-full justify-start text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                   >
                     <Settings className="h-4 w-4 mr-2" />
-                    Settings
+                    {t('client.dashboard.settings')}
                   </Button>
                   
                   <Button
                     variant="ghost"
                     onClick={handleLogout}
-                    className="w-full justify-start text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                    className="w-full justify-start text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
                   >
                     <LogOut className="h-4 w-4 mr-2" />
-                    Sign Out
+                    {t('client.dashboard.logout')}
                   </Button>
                 </div>
               )}

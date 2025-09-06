@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ImageGallery, ImageItem } from '@/components/ImageGallery';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/contexts/language-context';
 import { 
   FileText, 
   BarChart3,
@@ -13,6 +14,7 @@ import {
 } from 'lucide-react';
 
 export function ClientImageGallery() {
+  const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterTags, setFilterTags] = useState<string[]>([]);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -150,8 +152,8 @@ export function ClientImageGallery() {
       {/* Main Image Gallery */}
       <ImageGallery
         images={images}
-        title="Reports & Documents"
-        description="Access your investment reports, charts, and documents"
+        title={t('client.documents.title')}
+        description={t('client.documents.description')}
         showUploadButton={true}
         onUpload={handleUpload}
         onImageUpload={handleImageUpload}
@@ -166,19 +168,19 @@ export function ClientImageGallery() {
       />
 
       {/* Quick Actions */}
-      <Card className="bg-blue-50 border-blue-200">
+      <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-medium text-blue-900 mb-1">
-                Need a specific report?
+              <h3 className="text-lg font-medium text-blue-900 dark:text-blue-100 mb-1">
+                {t('client.documents.need_report')}
               </h3>
-              <p className="text-blue-700">
-                Can't find what you're looking for? Request a custom report from your advisor.
+              <p className="text-blue-700 dark:text-blue-300">
+                {t('client.documents.request_custom')}
               </p>
             </div>
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              Request Report
+            <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700">
+              {t('client.documents.request_report')}
             </Button>
           </div>
         </CardContent>

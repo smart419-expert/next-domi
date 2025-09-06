@@ -19,7 +19,7 @@ export function ThemeToggle() {
       <Button
         variant="ghost"
         size="sm"
-        className="text-slate-500 hover:text-slate-700"
+        className="text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-gray-300"
         aria-label={`Current theme: ${theme}`}
       >
         {(() => {
@@ -29,13 +29,13 @@ export function ThemeToggle() {
         })()}
       </Button>
       
-      <div className="absolute right-0 top-full mt-2 w-32 bg-white border border-slate-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+      <div className="absolute right-0 top-full mt-2 w-32 bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
         {themes.map((themeOption) => (
           <button
             key={themeOption.value}
             onClick={() => setTheme(themeOption.value)}
-            className={`w-full flex items-center px-3 py-2 text-sm text-left hover:bg-slate-50 first:rounded-t-lg last:rounded-b-lg ${
-              theme === themeOption.value ? 'bg-blue-50 text-blue-700' : 'text-slate-700'
+            className={`w-full flex items-center px-3 py-2 text-sm text-left hover:bg-slate-50 dark:hover:bg-gray-700 first:rounded-t-lg last:rounded-b-lg ${
+              theme === themeOption.value ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400' : 'text-slate-700 dark:text-gray-300'
             }`}
           >
             <themeOption.icon className="h-4 w-4 mr-2" />

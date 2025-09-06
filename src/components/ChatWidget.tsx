@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -146,47 +146,51 @@ export function ChatWidget({
     return () => clearInterval(interval);
   }, [agentStatus]);
 
-  // Mock messages for demo
+  // Mock messages for demo - using useMemo to prevent infinite loop
+  const mockMessages: ChatMessage[] = useMemo(() => [
+    {
+      id: '1',
+      content: 'Hello! How can I help you today?',
+      sender: 'agent',
+      timestamp: new Date(Date.now() - 300000), // 5 minutes ago
+      isRead: true,
+    },
+    {
+      id: '2',
+      content: 'I need help with my investment portfolio',
+      sender: 'user',
+      timestamp: new Date(Date.now() - 240000), // 4 minutes ago
+      isRead: true,
+    },
+    {
+      id: '3',
+      content: 'I\'d be happy to help you with your portfolio. What specific questions do you have?',
+      sender: 'agent',
+      timestamp: new Date(Date.now() - 180000), // 3 minutes ago
+      isRead: true,
+    },
+    {
+      id: '4',
+      content: 'Can you explain the recent performance of my stocks?',
+      sender: 'user',
+      timestamp: new Date(Date.now() - 120000), // 2 minutes ago
+      isRead: true,
+    },
+    {
+      id: '5',
+      content: 'I\'m looking into your portfolio performance now. One moment please...',
+      sender: 'agent',
+      timestamp: new Date(Date.now() - 60000), // 1 minute ago
+      isRead: false,
+    },
+  ], []); // Empty dependency array since we want stable timestamps
+
+  // Initialize messages with mock data or custom messages
   useEffect(() => {
     if (customMessages.length === 0) {
-      const mockMessages: ChatMessage[] = [
-        {
-          id: '1',
-          content: 'Hello! How can I help you today?',
-          sender: 'agent',
-          timestamp: new Date(Date.now() - 300000), // 5 minutes ago
-          isRead: true,
-        },
-        {
-          id: '2',
-          content: 'I need help with my investment portfolio',
-          sender: 'user',
-          timestamp: new Date(Date.now() - 240000), // 4 minutes ago
-          isRead: true,
-        },
-        {
-          id: '3',
-          content: 'I\'d be happy to help you with your portfolio. What specific questions do you have?',
-          sender: 'agent',
-          timestamp: new Date(Date.now() - 180000), // 3 minutes ago
-          isRead: true,
-        },
-        {
-          id: '4',
-          content: 'Can you explain the recent performance of my stocks?',
-          sender: 'user',
-          timestamp: new Date(Date.now() - 120000), // 2 minutes ago
-          isRead: true,
-        },
-        {
-          id: '5',
-          content: 'I\'m looking into your portfolio performance now. One moment please...',
-          sender: 'agent',
-          timestamp: new Date(Date.now() - 60000), // 1 minute ago
-          isRead: false,
-        },
-      ];
       setMessages(mockMessages);
+    } else {
+      setMessages(customMessages);
     }
   }, [customMessages]);
 

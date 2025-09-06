@@ -26,6 +26,7 @@ import {
 import Link from 'next/link';
 import { VirginMoneyLogo } from '@/components/ui/virgin-money-logo';
 import { LanguageSelector } from '@/components/ui/language-selector';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const getFeatures = (t: (key: string) => string) => [
   {
@@ -155,6 +156,7 @@ export default function HomePage() {
               onClick={() => router.push('/')}
             />
             <div className="flex items-center space-x-4">
+              <ThemeToggle />
               <LanguageSelector />
               <Button variant="ghost" onClick={() => router.push('/login')} className="text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                 Iniciar Sesión

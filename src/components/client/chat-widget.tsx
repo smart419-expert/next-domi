@@ -118,7 +118,7 @@ export function ClientChatWidget() {
               </p>
             </div>
             <div className="flex space-x-2">
-              <Button className="bg-blue-600 hover:bg-blue-700 shadow-lg">
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg">
                 <Phone className="h-4 w-4 mr-2" />
                 {t('client.chat.call_now')}
               </Button>

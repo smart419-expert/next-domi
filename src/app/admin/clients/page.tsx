@@ -1,3 +1,5 @@
+'use client';
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -5,6 +7,7 @@ import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '@
 import { Avatar } from '@/components/ui/avatar';
 import { AppLayout, PageTitle } from '@/components/layout';
 import { formatCurrency, formatDate } from '@/lib/utils';
+import { useLanguage } from '@/contexts/language-context';
 import { Search, Plus, MoreHorizontal, MessageSquare, DollarSign, Users } from 'lucide-react';
 import Link from 'next/link';
 
@@ -57,6 +60,7 @@ const clients = [
 ];
 
 export default function ClientsPage() {
+  const { t } = useLanguage();
   const totalClients = clients.length;
   const activeClients = clients.filter(c => c.status === 'active').length;
   const totalBalance = clients.reduce((sum, c) => sum + c.balance, 0);
@@ -65,14 +69,14 @@ export default function ClientsPage() {
     <AppLayout>
       <div className="py-8">
         <PageTitle
-          title="All Clients"
-          description="A list of all your clients and their information"
+          title={t('admin.clients.title')}
+          description={t('admin.clients.description')}
           size="lg"
         >
           <Button asChild className="bg-blue-600 text-white hover:bg-blue-700">
             <Link href="/admin/clients/new">
               <Plus className="h-4 w-4 mr-2" />
-              Add Client
+              {t('admin.clients.add_client')}
             </Link>
           </Button>
         </PageTitle>
@@ -81,7 +85,7 @@ export default function ClientsPage() {
           <Card className="p-6 bg-white border-2 border-slate-200 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Total Clients</p>
+                <p className="text-sm font-medium text-slate-600">{t('admin.clients.total_clients')}</p>
                 <div className="text-2xl font-bold text-slate-900 mt-1">{totalClients}</div>
               </div>
               <div className="p-3 rounded-lg bg-blue-100">
@@ -92,7 +96,7 @@ export default function ClientsPage() {
           <Card className="p-6 bg-white border-2 border-slate-200 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Active Clients</p>
+                <p className="text-sm font-medium text-slate-600">{t('admin.clients.active_clients')}</p>
                 <div className="text-2xl font-bold text-slate-900 mt-1">{activeClients}</div>
               </div>
               <div className="p-3 rounded-lg bg-green-100">
@@ -103,7 +107,7 @@ export default function ClientsPage() {
           <Card className="p-6 bg-white border-2 border-slate-200 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Total Balance</p>
+                <p className="text-sm font-medium text-slate-600">{t('admin.clients.total_balance')}</p>
                 <div className="text-2xl font-bold text-slate-900 mt-1">{formatCurrency(totalBalance)}</div>
               </div>
               <div className="p-3 rounded-lg bg-yellow-100">
@@ -120,14 +124,14 @@ export default function ClientsPage() {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                 <Input
-                  placeholder="Search clients..."
+                  placeholder={t('admin.clients.search_placeholder')}
                   className="pl-10"
                 />
               </div>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" className="border-2 border-slate-300 text-slate-700 hover:bg-slate-50 shadow-md">Filter</Button>
-              <Button variant="outline" className="border-2 border-slate-300 text-slate-700 hover:bg-slate-50 shadow-md">Export</Button>
+              <Button variant="outline" className="border-2 border-slate-300 text-slate-700 hover:bg-slate-50 shadow-md">{t('admin.clients.filter')}</Button>
+              <Button variant="outline" className="border-2 border-slate-300 text-slate-700 hover:bg-slate-50 shadow-md">{t('admin.clients.export')}</Button>
             </div>
           </div>
         </Card>
@@ -135,19 +139,19 @@ export default function ClientsPage() {
         {/* Clients Table */}
         <Card className="p-6 bg-white border-2 border-slate-200 rounded-xl shadow-lg">
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-slate-900 mb-2">All Clients</h3>
-            <p className="text-sm text-slate-600">A list of all your clients and their information</p>
+            <h3 className="text-lg font-semibold text-slate-900 mb-2">{t('admin.clients.title')}</h3>
+            <p className="text-sm text-slate-600">{t('admin.clients.description')}</p>
           </div>
           <div>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[300px] text-slate-900">Client</TableHead>
-                  <TableHead className="w-[250px] text-slate-900">Contact</TableHead>
-                  <TableHead className="w-[120px] text-slate-900">Balance</TableHead>
-                  <TableHead className="w-[100px] text-slate-900">Status</TableHead>
-                  <TableHead className="w-[180px] text-slate-900">Last Login</TableHead>
-                  <TableHead className="w-[150px] text-slate-900">Actions</TableHead>
+                  <TableHead className="w-[300px] text-slate-900">{t('admin.clients.client')}</TableHead>
+                  <TableHead className="w-[250px] text-slate-900">{t('admin.clients.contact')}</TableHead>
+                  <TableHead className="w-[120px] text-slate-900">{t('admin.clients.balance')}</TableHead>
+                  <TableHead className="w-[100px] text-slate-900">{t('admin.clients.status')}</TableHead>
+                  <TableHead className="w-[180px] text-slate-900">{t('admin.clients.last_login')}</TableHead>
+                  <TableHead className="w-[150px] text-slate-900">{t('admin.clients.actions')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -179,7 +183,7 @@ export default function ClientsPage() {
                           ? 'status-active'
                           : 'status-inactive'
                       }`}>
-                        {client.status}
+                        {client.status === 'active' ? t('admin.clients.active') : t('admin.clients.inactive')}
                       </span>
                     </TableCell>
                     <TableCell className="py-6">

@@ -51,8 +51,8 @@ export default function ClientDashboard() {
     const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
     
     if (diffInMinutes < 1) return t('client.dashboard.just_now');
-    if (diffInMinutes < 60) return `${diffInMinutes}m atrás`;
-    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h atrás`;
+    if (diffInMinutes < 60) return `${diffInMinutes}${t('client.dashboard.minutes_ago')}`;
+    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}${t('client.dashboard.hours_ago')}`;
     return date.toLocaleDateString();
   };
 
@@ -64,16 +64,16 @@ export default function ClientDashboard() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-              {t('client.dashboard.welcome')}, {user?.name || 'Cliente'}!
+              {t('client.dashboard.welcome')}, {user?.name || t('client.dashboard.client')}!
             </h1>
             <p className="text-gray-600 dark:text-gray-300">
-              Aquí tienes un resumen de tu cuenta y actividad reciente.
+              {t('client.dashboard.subtitle')}
             </p>
           </div>
           <div className="flex items-center space-x-4">
             <Badge variant="outline" className="flex items-center space-x-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
               <Clock className="h-3 w-3" />
-              <span>Última actualización: {formatLastUpdate(lastUpdate)}</span>
+              <span>{t('client.dashboard.last_update')}: {formatLastUpdate(lastUpdate)}</span>
             </Badge>
             <Button
               variant="outline"

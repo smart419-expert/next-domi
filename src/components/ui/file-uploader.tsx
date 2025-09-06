@@ -242,7 +242,7 @@ export function FileUploader({
       {/* Upload Button */}
       {files.length > 0 && !isUploading && (
         <div className="mt-6 flex justify-end">
-          <Button onClick={uploadFile} className="bg-blue-600 hover:bg-blue-700">
+          <Button onClick={uploadFile} className="bg-blue-600 hover:bg-blue-700 text-white">
             <Upload className="h-4 w-4 mr-2" />
             Upload {files.length} file{files.length > 1 ? 's' : ''}
           </Button>

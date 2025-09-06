@@ -220,7 +220,7 @@ export function ChatWindow({ clientId, clientName, className }: ChatWindowProps)
               <Button
                 size="sm"
                 onClick={handleRequestNotificationPermission}
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
               >
                 Enable
               </Button>

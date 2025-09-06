@@ -228,7 +228,7 @@ export default function ClientPayments() {
                 </p>
               </div>
               <div className="flex space-x-2">
-                <Button className="bg-blue-600 hover:bg-blue-700">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                   <CreditCard className="h-4 w-4 mr-2" />
                   New Payment
                 </Button>

@@ -248,7 +248,7 @@ export default function ClientDocuments() {
                   Can&apos;t find what you&apos;re looking for? Contact us and we&apos;ll help you locate it.
                 </p>
               </div>
-              <Button className="bg-blue-600 hover:bg-blue-700">
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                 Request Document
               </Button>
             </div>

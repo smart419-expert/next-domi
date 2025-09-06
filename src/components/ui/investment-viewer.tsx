@@ -7,6 +7,7 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { DynamicChart } from './dynamic-chart';
 import { InvestmentGallery } from './investment-gallery';
+import { useLanguage } from '@/contexts/language-context';
 import { BarChart3, Image as ImageIcon, ToggleLeft, ToggleRight } from 'lucide-react';
 
 interface InvestmentViewerProps {
@@ -14,6 +15,7 @@ interface InvestmentViewerProps {
 }
 
 export function InvestmentViewer({ className }: InvestmentViewerProps) {
+  const { t } = useLanguage();
   const [useDynamicChart, setUseDynamicChart] = useState(true);
   const [chartData, setChartData] = useState<any[]>([]);
 
@@ -42,21 +44,21 @@ export function InvestmentViewer({ className }: InvestmentViewerProps) {
               ) : (
                 <ImageIcon className="h-5 w-5" />
               )}
-              Investment Data Visualization
+{t('investments.data_visualization')}
             </CardTitle>
             <div className="flex items-center space-x-3">
               <div className="flex items-center space-x-2">
                 <Label htmlFor="chart-toggle" className="text-sm font-medium">
-                  {useDynamicChart ? 'Dynamic Chart' : 'Image Gallery'}
+{t('investments.dynamic_chart')}
                 </Label>
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-600">Images</span>
+                  <span className="text-sm text-gray-600">{t('investments.images')}</span>
                   <Switch
                     id="chart-toggle"
                     checked={useDynamicChart}
                     onCheckedChange={setUseDynamicChart}
                   />
-                  <span className="text-sm text-gray-600">Charts</span>
+                  <span className="text-sm text-gray-600">{t('investments.charts')}</span>
                 </div>
               </div>
             </div>

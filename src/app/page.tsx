@@ -68,10 +68,10 @@ const getFeatures = (t: (key: string) => string) => [
 ];
 
 const getStats = (t: (key: string) => string) => [
-  { label: "Usuarios Activos", value: "10,000+" },
-  { label: "Mensajes Enviados", value: "1M+" },
-  { label: "Pagos Procesados", value: "$50M+" },
-  { label: "Satisfacción del Cliente", value: "99.9%" }
+  { label: t('home.stats.active_users'), value: "10,000+" },
+  { label: t('home.stats.messages_sent'), value: "1M+" },
+  { label: t('home.stats.payments_processed'), value: "$50M+" },
+  { label: t('home.stats.customer_satisfaction'), value: "99.9%" }
 ];
 
 const testimonials = [
@@ -127,7 +127,7 @@ export default function HomePage() {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="h-12 w-12 animate-spin text-blue-600 dark:text-blue-400 mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-300">Cargando...</p>
+          <p className="text-gray-600 dark:text-gray-300">{t('common.loading')}</p>
         </div>
       </div>
     );
@@ -164,10 +164,10 @@ export default function HomePage() {
               <ThemeToggle />
               <LanguageSelector />
               <Button variant="ghost" onClick={() => router.push('/login')} className="text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                Iniciar Sesión
+                {t('common.sign_in')}
               </Button>
-              <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600" onClick={() => router.push('/login')}>
-                Comenzar
+              <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white" onClick={() => router.push('/login')}>
+                {t('common.get_started')}
               </Button>
             </div>
             
@@ -175,8 +175,8 @@ export default function HomePage() {
             <div className="md:hidden flex items-center space-x-2">
               <ThemeToggle />
               <LanguageSelector />
-              <Button size="sm" className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600" onClick={() => router.push('/login')}>
-                Comenzar
+              <Button size="sm" className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white" onClick={() => router.push('/login')}>
+                {t('common.get_started')}
               </Button>
             </div>
           </div>
@@ -332,7 +332,7 @@ export default function HomePage() {
             Join thousands of businesses already using our platform to manage their clients more effectively.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-3" onClick={() => router.push('/login')}>
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-3" onClick={() => router.push('/login')}>
               Get Started Today
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>

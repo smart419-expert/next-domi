@@ -326,7 +326,7 @@ export function Payments() {
                 <ArrowUpRight className="h-4 w-4 mr-2" />
                 Withdraw
               </Button>
-              <Button onClick={() => setShowNewPayment(true)} disabled={!selectedWallet} className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
+              <Button onClick={() => setShowNewPayment(true)} disabled={!selectedWallet} className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white">
                 <Plus className="h-4 w-4 mr-2" />
                 New Payment
               </Button>
@@ -611,7 +611,7 @@ export function Payments() {
                 {t('client.payments.contact_support_desc')}
               </p>
             </div>
-            <Button className="bg-blue-600 hover:bg-blue-700">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
               {t('client.payments.contact_support')}
             </Button>
           </div>

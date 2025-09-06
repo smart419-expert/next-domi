@@ -10,8 +10,10 @@ import { useRole, UserRole } from '@/contexts/role-context';
 import { Users, Shield, Eye, UserCheck, MoreHorizontal, Edit, Trash2 } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 import toast from 'react-hot-toast';
+import { useLanguage } from '@/contexts/language-context';
 
 export function RoleManagement() {
+  const { t } = useLanguage();
   const { users, updateUserRole, currentUser, hasPermission } = useRole();
   const [editingUser, setEditingUser] = useState<string | null>(null);
 
@@ -50,13 +52,13 @@ export function RoleManagement() {
   const getRoleDescription = (role: UserRole) => {
     switch (role) {
       case 'admin':
-        return 'Full system access, can manage users and settings';
+        return t('admin.settings.role_admin_desc');
       case 'agent':
-        return 'Can chat with clients, view data, and upload files';
+        return t('admin.settings.role_agent_desc');
       case 'viewer':
-        return 'Read-only access to basic client information';
+        return t('admin.settings.role_viewer_desc');
       default:
-        return 'No permissions';
+        return t('admin.settings.role_no_permissions');
     }
   };
 
@@ -66,7 +68,7 @@ export function RoleManagement() {
         <CardContent className="p-6">
           <div className="text-center text-gray-500">
             <Shield className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-            <p>You don&apos;t have permission to manage users.</p>
+            <p>{t('admin.settings.no_permission')}</p>
           </div>
         </CardContent>
       </Card>
@@ -78,10 +80,10 @@ export function RoleManagement() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Users className="h-5 w-5" />
-          User Role Management
+          {t('admin.settings.user_role_management')}
         </CardTitle>
         <CardDescription>
-          Manage user roles and permissions. Changes take effect immediately.
+          {t('admin.settings.user_role_management_desc')}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -98,18 +100,18 @@ export function RoleManagement() {
                     <h3 className="font-medium text-gray-900">{user.name}</h3>
                     {user.id === currentUser?.id && (
                       <Badge variant="outline" className="text-xs">
-                        You
+                        {t('admin.settings.you')}
                       </Badge>
                     )}
                     {!user.isActive && (
                       <Badge variant="secondary" className="text-xs">
-                        Offline
+                        {t('admin.settings.offline')}
                       </Badge>
                     )}
                   </div>
                   <p className="text-sm text-gray-600">{user.email}</p>
                   <p className="text-xs text-gray-500">
-                    Last active: {formatDate(user.lastActive)}
+                    {t('admin.settings.last_active')}: {formatDate(user.lastActive)}
                   </p>
                 </div>
               </div>
@@ -118,7 +120,7 @@ export function RoleManagement() {
                 <div className="text-right">
                   <div className="flex items-center space-x-2 mb-1">
                     {getRoleIcon(user.role)}
-                    <span className="text-sm font-medium">Current Role</span>
+                    <span className="text-sm font-medium">{t('admin.settings.current_role')}</span>
                   </div>
                   <Badge className={getRoleColor(user.role)}>
                     {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
@@ -144,7 +146,7 @@ export function RoleManagement() {
                       variant="outline"
                       onClick={() => setEditingUser(null)}
                     >
-                      Cancel
+                      {t('admin.settings.cancel')}
                     </Button>
                   </div>
                 ) : (
@@ -155,7 +157,7 @@ export function RoleManagement() {
                     disabled={user.id === currentUser?.id}
                   >
                     <Edit className="h-4 w-4 mr-2" />
-                    Edit Role
+                    {t('admin.settings.edit_role')}
                   </Button>
                 )}
               </div>
@@ -164,41 +166,41 @@ export function RoleManagement() {
         </div>
 
         <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-          <h4 className="font-medium text-blue-900 mb-2">Role Permissions</h4>
+          <h4 className="font-medium text-blue-900 mb-2">{t('admin.settings.role_permissions')}</h4>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div>
               <div className="flex items-center space-x-2 mb-1">
                 <Shield className="h-4 w-4 text-red-600" />
-                <span className="font-medium text-blue-900">Admin</span>
+                <span className="font-medium text-blue-900">{t('admin.settings.role_admin')}</span>
               </div>
               <ul className="text-blue-700 space-y-1">
-                <li>• Edit client balances</li>
-                <li>• Manage users</li>
-                <li>• Configure providers</li>
-                <li>• System settings</li>
+                <li>• {t('admin.settings.role_admin_1')}</li>
+                <li>• {t('admin.settings.role_admin_2')}</li>
+                <li>• {t('admin.settings.role_admin_3')}</li>
+                <li>• {t('admin.settings.role_admin_4')}</li>
               </ul>
             </div>
             <div>
               <div className="flex items-center space-x-2 mb-1">
                 <UserCheck className="h-4 w-4 text-blue-600" />
-                <span className="font-medium text-blue-900">Agent</span>
+                <span className="font-medium text-blue-900">{t('admin.settings.role_agent')}</span>
               </div>
               <ul className="text-blue-700 space-y-1">
-                <li>• Chat with clients</li>
-                <li>• View all data</li>
-                <li>• Upload files</li>
-                <li>• View reports</li>
+                <li>• {t('admin.settings.role_agent_1')}</li>
+                <li>• {t('admin.settings.role_agent_2')}</li>
+                <li>• {t('admin.settings.role_agent_3')}</li>
+                <li>• {t('admin.settings.role_agent_4')}</li>
               </ul>
             </div>
             <div>
               <div className="flex items-center space-x-2 mb-1">
                 <Eye className="h-4 w-4 text-green-600" />
-                <span className="font-medium text-blue-900">Viewer</span>
+                <span className="font-medium text-blue-900">{t('admin.settings.role_viewer')}</span>
               </div>
               <ul className="text-blue-700 space-y-1">
-                <li>• View basic data</li>
-                <li>• View reports</li>
-                <li>• Read-only access</li>
+                <li>• {t('admin.settings.role_viewer_1')}</li>
+                <li>• {t('admin.settings.role_viewer_2')}</li>
+                <li>• {t('admin.settings.role_viewer_3')}</li>
               </ul>
             </div>
           </div>

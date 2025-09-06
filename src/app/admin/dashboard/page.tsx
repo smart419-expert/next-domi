@@ -25,14 +25,14 @@ export default function DashboardPage() {
       icon: DollarSign,
     },
     {
-      title: 'Conversaciones Activas',
+      title: t('dashboard.active_conversations'),
       value: '89',
       change: '+23%',
       changeType: 'positive' as const,
       icon: MessageSquare,
     },
     {
-      title: 'Files Uploaded',
+      title: t('dashboard.files_uploaded'),
       value: '2,341',
       change: '+5.4%',
       changeType: 'positive' as const,
@@ -44,27 +44,27 @@ export default function DashboardPage() {
     {
       id: 1,
       type: 'payment',
-      message: 'New payment received from Alice Johnson',
-      time: '2 minutes ago',
+      message: t('dashboard.activity.payment_received'),
+      time: t('dashboard.activity.time_2min'),
       amount: '$150.00',
     },
     {
       id: 2,
       type: 'message',
-      message: 'Bob Smith sent a new message',
-      time: '5 minutes ago',
+      message: t('dashboard.activity.message_sent'),
+      time: t('dashboard.activity.time_5min'),
     },
     {
       id: 3,
       type: 'file',
-      message: 'Carol Davis uploaded a new file',
-      time: '10 minutes ago',
+      message: t('dashboard.activity.file_uploaded'),
+      time: t('dashboard.activity.time_10min'),
     },
     {
       id: 4,
       type: 'client',
-      message: 'New client registered: David Wilson',
-      time: '15 minutes ago',
+      message: t('dashboard.activity.client_registered'),
+      time: t('dashboard.activity.time_15min'),
     },
   ];
 
@@ -72,12 +72,12 @@ export default function DashboardPage() {
     <AppLayout>
       <div className="py-8">
         <PageTitle
-          title="Dashboard"
-          description="Welcome back! Here's what's happening."
+          title={t('dashboard.title')}
+          description={t('dashboard.description')}
           size="lg"
         >
           <Button asChild className="bg-blue-600 text-white hover:bg-blue-700">
-            <Link href="/clients">View All Clients</Link>
+            <Link href="/clients">{t('dashboard.view_all')}</Link>
           </Button>
         </PageTitle>
         
@@ -110,8 +110,8 @@ export default function DashboardPage() {
                 <Activity className="h-5 w-5 text-slate-600" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-slate-900">Recent Activity</h3>
-                <p className="text-sm text-slate-600">Latest updates from your clients</p>
+                <h3 className="text-lg font-semibold text-slate-900">{t('dashboard.recent_activity')}</h3>
+                <p className="text-sm text-slate-600">{t('dashboard.recent_activity_desc')}</p>
               </div>
             </div>
             <div className="space-y-4">
@@ -135,32 +135,32 @@ export default function DashboardPage() {
           {/* Quick Actions */}
           <Card className="p-6 bg-white border border-slate-200 rounded-lg">
             <div className="mb-6">
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Quick Actions</h3>
-              <p className="text-sm text-slate-600">Common tasks and shortcuts</p>
+              <h3 className="text-lg font-semibold text-slate-900 mb-2">{t('dashboard.quick_actions')}</h3>
+              <p className="text-sm text-slate-600">{t('dashboard.quick_actions_desc')}</p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <Button asChild className="h-16 flex-col bg-blue-600 text-white hover:bg-blue-700">
                 <Link href="/clients">
                   <Users className="h-5 w-5 mb-2" />
-                  <span className="text-sm font-medium">Manage Clients</span>
+                  <span className="text-sm font-medium">{t('dashboard.manage_clients')}</span>
                 </Link>
               </Button>
               <Button asChild className="h-16 flex-col bg-white text-slate-700 hover:bg-slate-50 border border-slate-300">
                 <Link href="/clients">
                   <MessageSquare className="h-5 w-5 mb-2" />
-                  <span className="text-sm font-medium">View Messages</span>
+                  <span className="text-sm font-medium">{t('dashboard.view_messages')}</span>
                 </Link>
               </Button>
               <Button asChild className="h-16 flex-col bg-white text-slate-700 hover:bg-slate-50 border border-slate-300">
                 <Link href="/clients">
                   <FileText className="h-5 w-5 mb-2" />
-                  <span className="text-sm font-medium">File Manager</span>
+                  <span className="text-sm font-medium">{t('dashboard.file_manager')}</span>
                 </Link>
               </Button>
               <Button asChild className="h-16 flex-col bg-white text-slate-700 hover:bg-slate-50 border border-slate-300">
                 <Link href="/clients">
                   <DollarSign className="h-5 w-5 mb-2" />
-                  <span className="text-sm font-medium">Payments</span>
+                  <span className="text-sm font-medium">{t('dashboard.payments')}</span>
                 </Link>
               </Button>
             </div>

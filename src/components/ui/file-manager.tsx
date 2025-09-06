@@ -108,7 +108,7 @@ export function FileManager({ clientId, className }: FileManagerProps) {
         
         <Button
           onClick={() => setShowUploader(!showUploader)}
-          className="bg-blue-600 hover:bg-blue-700"
+          className="bg-blue-600 hover:bg-blue-700 text-white"
         >
           <Upload className="h-4 w-4 mr-2" />
           {showUploader ? 'Hide Uploader' : 'Upload Files'}

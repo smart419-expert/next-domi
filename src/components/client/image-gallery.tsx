@@ -179,7 +179,7 @@ export function ClientImageGallery() {
                 {t('client.documents.request_custom')}
               </p>
             </div>
-            <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700">
+            <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white">
               {t('client.documents.request_report')}
             </Button>
           </div>

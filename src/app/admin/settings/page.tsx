@@ -1,3 +1,5 @@
+'use client';
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,14 +9,17 @@ import { ChatProviderConfig } from '@/components/ui/chat-provider-config';
 import { PaymentProviderConfig } from '@/components/ui/payment-provider-config';
 import { UploadLimitsConfig } from '@/components/ui/upload-limits-config';
 import { Settings as SettingsIcon, User, Bell, Shield, Palette, Users, MessageSquare, CreditCard, Upload } from 'lucide-react';
+import { useLanguage } from '@/contexts/language-context';
 
 export default function SettingsPage() {
+  const { t } = useLanguage();
+  
   return (
     <AppLayout>
       <div className="py-8">
         <PageTitle
-          title="Admin Settings"
-          description="Manage system configuration, user roles, and provider settings"
+          title={t('admin.settings.title')}
+          description={t('admin.settings.description')}
           size="lg"
         />
 
@@ -23,7 +28,7 @@ export default function SettingsPage() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Users className="h-5 w-5 text-blue-600" />
-              <h2 className="text-xl font-semibold text-gray-900">User Management</h2>
+              <h2 className="text-xl font-semibold text-gray-900">{t('admin.settings.user_management')}</h2>
             </div>
             <RoleManagement />
           </div>
@@ -32,7 +37,7 @@ export default function SettingsPage() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <MessageSquare className="h-5 w-5 text-green-600" />
-              <h2 className="text-xl font-semibold text-gray-900">Provider Configurations</h2>
+              <h2 className="text-xl font-semibold text-gray-900">{t('admin.settings.provider_configurations')}</h2>
             </div>
             <div className="space-y-6">
               <ChatProviderConfig />
@@ -44,7 +49,7 @@ export default function SettingsPage() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Upload className="h-5 w-5 text-purple-600" />
-              <h2 className="text-xl font-semibold text-gray-900">System Settings</h2>
+              <h2 className="text-xl font-semibold text-gray-900">{t('admin.settings.system_settings')}</h2>
             </div>
             <UploadLimitsConfig />
           </div>
@@ -53,7 +58,7 @@ export default function SettingsPage() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <User className="h-5 w-5 text-orange-600" />
-              <h2 className="text-xl font-semibold text-gray-900">Personal Settings</h2>
+              <h2 className="text-xl font-semibold text-gray-900">{t('admin.settings.personal_settings')}</h2>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Profile Settings */}

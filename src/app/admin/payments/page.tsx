@@ -36,6 +36,7 @@ import {
   User as UserIcon
 } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
+import { useLanguage } from '@/contexts/language-context';
 
 interface PaymentData {
   amount: number;
@@ -48,6 +49,7 @@ interface PaymentData {
 }
 
 export default function PaymentsPage() {
+  const { t } = useLanguage();
   const [amount, setAmount] = useState<number>(0);
   const [clientId, setClientId] = useState<string>('');
   const [clientName, setClientName] = useState<string>('');
@@ -123,58 +125,58 @@ export default function PaymentsPage() {
   const quickActions = [
     {
       id: 'recharge',
-      name: 'Recharge',
+      name: t('payments.recharge'),
       icon: Heart,
       color: 'bg-blue-500',
-      description: 'Recharge account'
+      description: t('payments.recharge_account')
     },
     {
       id: 'presentation',
-      name: 'Presentation',
+      name: t('payments.presentation'),
       icon: FileText,
       color: 'bg-orange-500',
-      description: 'Account presentation'
+      description: t('payments.account_presentation')
     },
     {
       id: 'invitation',
-      name: 'Invitation',
+      name: t('payments.invitation'),
       icon: BarChart3,
       color: 'bg-teal-500',
-      description: 'Invite friends'
+      description: t('payments.invite_friends')
     },
     {
       id: 'personal',
-      name: 'Personal',
+      name: t('payments.personal'),
       icon: User,
       color: 'bg-orange-500',
-      description: 'Personal settings'
+      description: t('payments.personal_settings')
     }
   ];
 
   const accountRecords = [
     {
       id: 'bank-card',
-      name: 'My Bank Card',
+      name: t('payments.my_bank_card'),
       icon: CreditCard,
-      description: 'Manage bank card'
+      description: t('payments.manage_bank_card')
     },
     {
       id: 'recharge-record',
-      name: 'Recharge Record',
+      name: t('payments.recharge_record'),
       icon: Calendar,
-      description: 'Recharge history'
+      description: t('payments.recharge_history')
     },
     {
       id: 'withdrawal-record',
-      name: 'Withdrawal Records',
+      name: t('payments.withdrawal_records'),
       icon: TrendingDown,
-      description: 'Withdrawal history'
+      description: t('payments.withdrawal_history')
     },
     {
       id: 'balance-change',
-      name: 'Balance Change Record',
+      name: t('payments.balance_change_record'),
       icon: TrendingUp,
-      description: 'Balance change history'
+      description: t('payments.balance_change_history')
     }
   ];
 
@@ -246,8 +248,8 @@ export default function PaymentsPage() {
       <div className="min-h-screen bg-slate-100 dark:bg-gray-900">
         {/* Page Title */}
         <div className="px-4 pt-4 pb-2">
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Payments</h1>
-          <p className="text-slate-600 dark:text-gray-300">Manage your payments and account</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{t('payments.admin_title')}</h1>
+          <p className="text-slate-600 dark:text-gray-300">{t('payments.admin_description')}</p>
         </div>
 
         {/* Blue Gradient Header */}
@@ -275,7 +277,7 @@ export default function PaymentsPage() {
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center space-x-2">
               <Wallet className="h-5 w-5 payment-balance-text" />
-              <span className="text-sm font-medium payment-balance-text">Balance</span>
+              <span className="text-sm font-medium payment-balance-text">{t('payments.balance')}</span>
               <RefreshCw className="h-4 w-4 cursor-pointer hover:rotate-180 transition-transform payment-balance-text" />
             </div>
           </div>

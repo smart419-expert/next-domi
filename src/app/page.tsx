@@ -150,18 +150,32 @@ export default function HomePage() {
       <nav className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <VirginMoneyLogo 
-              size="lg" 
-              text="domi" 
-              onClick={() => router.push('/')}
-            />
-            <div className="flex items-center space-x-4">
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <VirginMoneyLogo 
+                size="lg" 
+                text="domi" 
+                onClick={() => router.push('/')}
+              />
+            </div>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-4">
               <ThemeToggle />
               <LanguageSelector />
               <Button variant="ghost" onClick={() => router.push('/login')} className="text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                 Iniciar Sesión
               </Button>
               <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600" onClick={() => router.push('/login')}>
+                Comenzar
+              </Button>
+            </div>
+            
+            {/* Mobile Navigation */}
+            <div className="md:hidden flex items-center space-x-2">
+              <ThemeToggle />
+              <LanguageSelector />
+              <Button size="sm" className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600" onClick={() => router.push('/login')}>
                 Comenzar
               </Button>
             </div>
@@ -296,7 +310,7 @@ export default function HomePage() {
                       <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
                     ))}
                   </div>
-                  <p className="text-gray-600 mb-4 italic">"{testimonial.content}"</p>
+                  <p className="text-gray-600 mb-4 italic">&ldquo;{testimonial.content}&rdquo;</p>
                   <div>
                     <div className="font-semibold text-gray-900">{testimonial.name}</div>
                     <div className="text-sm text-gray-500">{testimonial.role}</div>

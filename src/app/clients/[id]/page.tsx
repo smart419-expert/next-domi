@@ -102,9 +102,9 @@ const messages = [
 ];
 
 interface ClientPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default function ClientPage({ params }: ClientPageProps) {
@@ -112,16 +112,22 @@ export default function ClientPage({ params }: ClientPageProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isBalanceModalOpen, setIsBalanceModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [clientId, setClientId] = useState<string>('');
+
+  useEffect(() => {
+    params.then(({ id }) => setClientId(id));
+  }, [params]);
 
   // Load transactions on component mount
   useEffect(() => {
     loadTransactions();
-  }, []);
+  }, [clientId]);
 
   const loadTransactions = async () => {
+    if (!clientId) return;
     try {
       setIsLoading(true);
-      const response = await axios.get(`/api/clients/${client.id}/transactions`);
+      const response = await axios.get(`/api/clients/${clientId}/transactions`);
       if (response.data.success) {
         setTransactions(response.data.transactions);
       }
@@ -133,9 +139,10 @@ export default function ClientPage({ params }: ClientPageProps) {
   };
 
   const handleBalanceUpdate = async (data: BalanceEditData) => {
+    if (!clientId) return;
     try {
       setIsLoading(true);
-      const response = await axios.put(`/api/clients/${client.id}/balance`, {
+      const response = await axios.put(`/api/clients/${clientId}/balance`, {
         balance: data.newBalance,
         note: data.changeReason
       });

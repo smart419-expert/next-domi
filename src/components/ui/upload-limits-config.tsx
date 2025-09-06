@@ -68,7 +68,7 @@ export function UploadLimitsConfig() {
   const [isEditing, setIsEditing] = useState(false);
   const [newMimeType, setNewMimeType] = useState('');
 
-  const handleLimitChange = (field: keyof UploadLimits, value: any) => {
+  const handleLimitChange = (field: keyof UploadLimits, value: string | number | object | boolean) => {
     setLimits(prev => ({ ...prev, [field]: value }));
   };
 
@@ -125,7 +125,7 @@ export function UploadLimitsConfig() {
         <CardContent className="p-6">
           <div className="text-center text-gray-500">
             <Shield className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-            <p>You don't have permission to configure upload limits.</p>
+            <p>You don&apos;t have permission to configure upload limits.</p>
           </div>
         </CardContent>
       </Card>

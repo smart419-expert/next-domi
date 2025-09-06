@@ -68,7 +68,7 @@ export function PaymentProviderConfig() {
     ));
   };
 
-  const handleProviderUpdate = (providerId: string, field: keyof PaymentProvider, value: any) => {
+  const handleProviderUpdate = (providerId: string, field: keyof PaymentProvider, value: string | number | boolean) => {
     setProviders(prev => prev.map(provider => 
       provider.id === providerId 
         ? { ...provider, [field]: value }
@@ -125,7 +125,7 @@ export function PaymentProviderConfig() {
         <CardContent className="p-6">
           <div className="text-center text-gray-500">
             <Shield className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-            <p>You don't have permission to configure payment providers.</p>
+            <p>You don&apos;t have permission to configure payment providers.</p>
           </div>
         </CardContent>
       </Card>

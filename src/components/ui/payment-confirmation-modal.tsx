@@ -100,7 +100,7 @@ export function PaymentConfirmationModal({
               {getStatusMessage()}
             </h3>
             <p className="text-gray-500">
-              Your payment has been processed and will be reflected in the client's account.
+              Your payment has been processed and will be reflected in the client&apos;s account.
             </p>
           </div>
 

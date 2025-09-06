@@ -17,7 +17,7 @@ export function RoleGuard({
   children, 
   fallback = null, 
   showMessage = false,
-  message = "You don't have permission to perform this action."
+  message = "You don&apos;t have permission to perform this action."
 }: RoleGuardProps) {
   const { hasPermission } = useRole();
 

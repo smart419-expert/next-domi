@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@headlessui/react';
+import { Dialog, DialogDescription, DialogTitle } from '@headlessui/react';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -46,24 +46,24 @@ const Modal = ({ open, onOpenChange, children }: ModalProps) => {
 
 const ModalTrigger = ({ asChild, children }: ModalTriggerProps) => {
   if (asChild) {
-    return <DialogTrigger asChild>{children}</DialogTrigger>;
+    return <>{children}</>;
   }
-  return <DialogTrigger>{children}</DialogTrigger>;
+  return <button>{children}</button>;
 };
 
 const ModalContent = ({ className, children }: ModalContentProps) => {
   return (
-    <DialogContent className={cn('sm:max-w-[425px]', className)}>
+    <Dialog.Panel className={cn('sm:max-w-[425px]', className)}>
       {children}
-    </DialogContent>
+    </Dialog.Panel>
   );
 };
 
 const ModalHeader = ({ className, children }: ModalHeaderProps) => {
   return (
-    <DialogHeader className={cn('space-y-1.5 pb-4', className)}>
+    <div className={cn('space-y-1.5 pb-4', className)}>
       {children}
-    </DialogHeader>
+    </div>
   );
 };
 

@@ -75,42 +75,48 @@ export default function PaymentsPage() {
     { id: '3', name: 'Carol Davis', email: 'carol@example.com' },
   ];
 
+  // Simple icon components
+  const PayPalIcon = () => <span className="text-2xl font-bold">PP</span>;
+  const BankIcon = () => <span className="text-2xl">🏦</span>;
+  const ZelleIcon = () => <span className="text-2xl font-bold">Z</span>;
+  const CashAppIcon = () => <span className="text-2xl font-bold">$</span>;
+
   const paymentMethods = [
     {
       id: 'paypal',
       name: 'PayPal',
       description: 'Pay securely with PayPal',
-      icon: 'PP',
+      icon: PayPalIcon,
       color: 'bg-blue-50 border-blue-200 text-blue-700',
       hoverColor: 'hover:bg-blue-100',
-      type: 'paypal'
+      type: 'link' as const
     },
     {
       id: 'bank',
       name: 'Bank Transfer',
       description: 'Direct bank transfer',
-      icon: '🏦',
+      icon: BankIcon,
       color: 'bg-gray-50 border-gray-200 text-gray-700',
       hoverColor: 'hover:bg-gray-100',
-      type: 'bank'
+      type: 'qr' as const
     },
     {
       id: 'zelle',
       name: 'Zelle',
       description: 'Send money with Zelle',
-      icon: 'Z',
+      icon: ZelleIcon,
       color: 'bg-purple-50 border-purple-200 text-purple-700',
       hoverColor: 'hover:bg-purple-100',
-      type: 'zelle'
+      type: 'qr' as const
     },
     {
       id: 'cashapp',
       name: 'Cash App',
       description: 'Pay with Cash App',
-      icon: '$',
+      icon: CashAppIcon,
       color: 'bg-green-50 border-green-200 text-green-700',
       hoverColor: 'hover:bg-green-100',
-      type: 'cashapp'
+      type: 'qr' as const
     }
   ];
 
@@ -594,7 +600,9 @@ export default function PaymentsPage() {
                           selectedMethod === method.id ? 'ring-2 ring-blue-500 dark:ring-blue-400 ring-offset-2' : ''
                         }`}
                       >
-                        <div className="text-2xl font-bold mb-2">{method.icon}</div>
+                        <div className="text-2xl font-bold mb-2">
+                          <method.icon />
+                        </div>
                         <div className="font-semibold text-sm">{method.name}</div>
                         <div className="text-xs opacity-75 mt-1">{method.description}</div>
                       </button>

@@ -144,7 +144,7 @@ export const mockAuth = {
   },
 
   // Listen to auth state changes
-  onAuthStateChange(callback: (event: string, session: any) => void) {
+  onAuthStateChange(callback: (event: string, session: unknown) => void) {
     // Simulate auth state change
     const checkAuth = () => {
       this.getUser().then(({ data: { user } }) => {

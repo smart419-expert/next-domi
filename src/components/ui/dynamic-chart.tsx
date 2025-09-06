@@ -76,7 +76,10 @@ export function DynamicChart({ data: initialData, onDataChange, className }: Dyn
     for (let i = 1; i < lines.length; i++) {
       const values = lines[i].split(',').map(v => v.trim());
       if (values.length === headers.length) {
-        const row: ChartData = {};
+        const row: ChartData = {
+          date: '',
+          value: 0
+        };
         headers.forEach((header, index) => {
           const value = values[index];
           if (header.toLowerCase().includes('date')) {
@@ -151,7 +154,7 @@ export function DynamicChart({ data: initialData, onDataChange, className }: Dyn
             Investment Performance
           </CardTitle>
           <div className="flex items-center gap-2">
-            <Select value={chartType} onValueChange={(value: 'line' | 'area') => setChartType(value)} className="w-32">
+            <Select value={chartType} onValueChange={(value: string) => setChartType(value as 'line' | 'area')} className="w-32">
               <option value="line">Line Chart</option>
               <option value="area">Area Chart</option>
             </Select>

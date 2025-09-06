@@ -1,15 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Mock data - in a real app, this would be stored in a database
-const clientUploads = new Map<string, any[]>();
+interface Upload {
+  id: string;
+  url: string;
+  name: string;
+  size: number;
+  type: string;
+  isFeatured: boolean;
+  uploadedAt: string;
+  clientId: string;
+}
+
+const clientUploads = new Map<string, Upload[]>();
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string; uploadId: string } }
+  { params }: { params: Promise<{ id: string; uploadId: string }> }
 ) {
   try {
-    const clientId = params.id;
-    const uploadId = params.uploadId;
+    const { id: clientId, uploadId } = await params;
     const body = await request.json();
 
     const uploads = clientUploads.get(clientId) || [];
@@ -44,11 +54,10 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string; uploadId: string } }
+  { params }: { params: Promise<{ id: string; uploadId: string }> }
 ) {
   try {
-    const clientId = params.id;
-    const uploadId = params.uploadId;
+    const { id: clientId, uploadId } = await params;
 
     const uploads = clientUploads.get(clientId) || [];
     const uploadIndex = uploads.findIndex(upload => upload.id === uploadId);

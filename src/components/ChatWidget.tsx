@@ -414,7 +414,7 @@ export function ChatWidget({
               {agentStatus === 'offline' && (
                 <div className="flex items-center space-x-2 mt-2 text-xs text-gray-500">
                   <AlertCircle className="h-3 w-3" />
-                  <span>Support is currently offline. We'll get back to you soon!</span>
+                  <span>Support is currently offline. We&apos;ll get back to you soon!</span>
                 </div>
               )}
             </div>
@@ -428,6 +428,25 @@ export function ChatWidget({
 // Extend Window interface for Chatwoot
 declare global {
   interface Window {
-    chatwootSDK: any;
+    chatwootSDK: {
+      run: (config: {
+        websiteToken: string;
+        baseUrl: string;
+        hideMessageBubble?: boolean;
+        position?: string;
+        type?: string;
+        launcherTitle?: string;
+        user?: {
+          identifier: string;
+          name: string;
+          email: string;
+          avatar_url?: string;
+          identifier_hash?: string;
+        };
+      }) => void;
+      hide: () => void;
+      show: () => void;
+      toggle: () => void;
+    };
   }
 }

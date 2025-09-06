@@ -145,7 +145,7 @@ export default function ClientHelp() {
           <CardContent className="p-6 text-center">
             <MessageSquare className="h-8 w-8 text-blue-600 mx-auto mb-3" />
             <h3 className="font-semibold text-gray-900 mb-2">Contact Support</h3>
-            <p className="text-sm text-gray-500">Send us a message and we'll get back to you</p>
+            <p className="text-sm text-gray-500">Send us a message and we&apos;ll get back to you</p>
           </CardContent>
         </Card>
 

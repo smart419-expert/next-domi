@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 export interface NotificationOptions {
   title: string;
   body?: string;
@@ -15,12 +17,12 @@ class NotificationService {
   private isSupported: boolean = false;
 
   constructor() {
-    this.isSupported = 'Notification' in window;
+    this.isSupported = typeof window !== 'undefined' && 'Notification' in window;
     this.permission = this.isSupported ? Notification.permission : 'denied';
   }
 
   async requestPermission(): Promise<NotificationPermission> {
-    if (!this.isSupported) {
+    if (typeof window === 'undefined' || !this.isSupported) {
       console.warn('Notifications are not supported in this browser');
       return 'denied';
     }
@@ -39,7 +41,7 @@ class NotificationService {
   }
 
   async showNotification(options: NotificationOptions): Promise<Notification | null> {
-    if (!this.isSupported || this.permission !== 'granted') {
+    if (typeof window === 'undefined' || !this.isSupported || this.permission !== 'granted') {
       console.warn('Notifications are not available or permission not granted');
       return null;
     }
@@ -92,37 +94,47 @@ class NotificationService {
   canRequestPermission(): boolean {
     return this.permission === 'default';
   }
+
+  getIsSupported(): boolean {
+    return this.isSupported;
+  }
 }
 
-// Create singleton instance
-export const notificationService = new NotificationService();
+// Create singleton instance only in browser
+export const notificationService = typeof window !== 'undefined' ? new NotificationService() : null;
 
 // Hook for React components
 export function useNotifications() {
-  const [permission, setPermission] = React.useState<NotificationPermission>(
-    notificationService.getPermissionStatus()
-  );
+  const [permission, setPermission] = React.useState<NotificationPermission>('denied');
+  const [isClient, setIsClient] = React.useState(false);
+
+  // Fix hydration issues by ensuring client-side only updates
+  React.useEffect(() => {
+    setIsClient(true);
+    if (notificationService) {
+      setPermission(notificationService.getPermissionStatus());
+    }
+  }, []);
 
   const requestPermission = async () => {
+    if (!notificationService || !isClient) return 'denied';
     const newPermission = await notificationService.requestPermission();
     setPermission(newPermission);
     return newPermission;
   };
 
-  const showNotification = notificationService.showNotification.bind(notificationService);
-  const showChatNotification = notificationService.showChatNotification.bind(notificationService);
+  const showNotification = notificationService?.showNotification.bind(notificationService) || (() => Promise.resolve(null));
+  const showChatNotification = notificationService?.showChatNotification.bind(notificationService) || (() => Promise.resolve(null));
 
   return {
     permission,
-    isSupported: notificationService.isSupported,
-    isGranted: notificationService.isPermissionGranted(),
-    isDenied: notificationService.isPermissionDenied(),
-    canRequest: notificationService.canRequestPermission(),
+    isSupported: isClient ? (notificationService?.getIsSupported() || false) : false,
+    isGranted: isClient ? (notificationService?.isPermissionGranted() || false) : false,
+    isDenied: isClient ? (notificationService?.isPermissionDenied() || true) : true,
+    canRequest: isClient ? (notificationService?.canRequestPermission() || false) : false,
     requestPermission,
     showNotification,
     showChatNotification,
   };
 }
 
-// Import React for the hook
-import React from 'react';

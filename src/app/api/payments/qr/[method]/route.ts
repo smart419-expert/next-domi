@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { method: string } }
+  { params }: { params: Promise<{ method: string }> }
 ) {
   try {
-    const { method } = params;
+    const { method } = await params;
     const { searchParams } = new URL(request.url);
     const amount = searchParams.get('amount') || '100.00';
 

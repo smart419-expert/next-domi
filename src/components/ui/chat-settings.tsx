@@ -63,6 +63,7 @@ export interface ChatSettings {
   provider: string;
   clientId: string;
   customScript: string;
+  scriptUrl: string;
   isEnabled: boolean;
   useMockChat: boolean;
 }
@@ -72,6 +73,7 @@ export function ChatSettings({ onSettingsChange, className }: ChatSettingsProps)
     provider: 'mock',
     clientId: '',
     customScript: '',
+    scriptUrl: '',
     isEnabled: true,
     useMockChat: true,
   });

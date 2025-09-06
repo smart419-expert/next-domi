@@ -66,7 +66,7 @@ export function RoleManagement() {
         <CardContent className="p-6">
           <div className="text-center text-gray-500">
             <Shield className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-            <p>You don't have permission to manage users.</p>
+            <p>You don&apos;t have permission to manage users.</p>
           </div>
         </CardContent>
       </Card>
@@ -132,7 +132,7 @@ export function RoleManagement() {
                   <div className="flex items-center space-x-2">
                     <Select
                       value={user.role}
-                      onValueChange={(value: UserRole) => handleRoleChange(user.id, value)}
+                      onValueChange={(value: string) => handleRoleChange(user.id, value as UserRole)}
                       className="w-32"
                     >
                       <option value="admin">Admin</option>

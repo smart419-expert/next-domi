@@ -36,12 +36,16 @@ export function useClientData(clientId: string, refreshInterval: number = 60000)
   return useQuery({
     queryKey: ['client', clientId],
     queryFn: async (): Promise<ClientData> => {
+      if (!clientId) {
+        throw new Error('Client ID is required');
+      }
       const response = await axios.get<ClientResponse>(`/api/clients/${clientId}`);
       if (!response.data.success) {
         throw new Error('Failed to fetch client data');
       }
       return response.data.client;
     },
+    enabled: !!clientId, // Only run query when clientId is truthy
     refetchInterval: refreshInterval,
     refetchIntervalInBackground: true,
     staleTime: 30000, // 30 seconds
@@ -53,6 +57,9 @@ export function useTriggerUpdate(clientId: string) {
 
   return useMutation({
     mutationFn: async (): Promise<TriggerUpdateResponse> => {
+      if (!clientId) {
+        throw new Error('Client ID is required');
+      }
       const response = await axios.post<TriggerUpdateResponse>(`/api/clients/${clientId}/trigger-update`);
       if (!response.data.success) {
         throw new Error(response.data.message || 'Failed to trigger update');
@@ -68,7 +75,7 @@ export function useTriggerUpdate(clientId: string) {
         duration: 3000,
       });
     },
-    onError: (error: any) => {
+    onError: (error: Error) => {
       toast.error(error.message || 'Failed to trigger update', {
         duration: 4000,
       });
@@ -105,6 +112,7 @@ export function useClientMessages(clientId: string, refreshInterval: number = 30
         },
       ];
     },
+    enabled: !!clientId, // Only run query when clientId is truthy
     refetchInterval: refreshInterval,
     refetchIntervalInBackground: true,
     staleTime: 15000, // 15 seconds
@@ -137,6 +145,7 @@ export function useClientUploads(clientId: string, refreshInterval: number = 450
         },
       ];
     },
+    enabled: !!clientId, // Only run query when clientId is truthy
     refetchInterval: refreshInterval,
     refetchIntervalInBackground: true,
     staleTime: 20000, // 20 seconds

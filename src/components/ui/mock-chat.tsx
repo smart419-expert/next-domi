@@ -17,7 +17,7 @@ import {
   Smile
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import axios from 'axios';
+import { useTheme } from '@/contexts/theme-context';
 
 interface Message {
   id: string;
@@ -36,78 +36,42 @@ interface MockChatProps {
 }
 
 export function MockChat({ clientId, clientName, onNewMessage, className }: MockChatProps) {
+  const { actualTheme } = useTheme();
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(true); // Always connected for demo
   const [isTyping, setIsTyping] = useState(false);
-  const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'disconnected'>('connecting');
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const typingTimeoutRef = useRef<NodeJS.Timeout>();
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Mock WebSocket connection
+
+  // Demo mode - always connected with initial messages
   useEffect(() => {
-    const connectToChat = async () => {
-      try {
-        setConnectionStatus('connecting');
-        
-        // Simulate connection delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Get mock connection details
-        const response = await axios.post('/api/chat/connect', { clientId });
-        
-        if (response.data.success) {
-          setIsConnected(true);
-          setConnectionStatus('connected');
-          
-          // Simulate receiving initial messages
-          const initialMessages: Message[] = [
-            {
-              id: 'msg-1',
-              content: 'Hello! How can I help you today?',
-              sender: 'admin',
-              timestamp: new Date().toISOString(),
-              read: true,
-              delivered: true,
-            },
-            {
-              id: 'msg-2',
-              content: 'Hi there! I need help with my account.',
-              sender: 'client',
-              timestamp: new Date(Date.now() - 300000).toISOString(), // 5 minutes ago
-              read: true,
-              delivered: true,
-            },
-          ];
-          
-          setMessages(initialMessages);
-        }
-      } catch (error) {
-        console.error('Failed to connect to chat:', error);
-        setConnectionStatus('disconnected');
-      }
-    };
-
-    connectToChat();
-
-    // Simulate periodic connection status updates
-    const statusInterval = setInterval(() => {
-      if (Math.random() > 0.95) { // 5% chance of disconnection
-        setIsConnected(false);
-        setConnectionStatus('disconnected');
-      } else if (!isConnected && connectionStatus === 'disconnected') {
-        setConnectionStatus('connecting');
-        setTimeout(() => {
-          setIsConnected(true);
-          setConnectionStatus('connected');
-        }, 2000);
-      }
-    }, 10000);
-
-    return () => {
-      clearInterval(statusInterval);
-    };
-  }, [clientId, isConnected, connectionStatus]);
+    // For demo purposes, we're always connected
+    setIsConnected(true);
+    
+    // Load initial demo messages
+    const initialMessages: Message[] = [
+      {
+        id: 'msg-1',
+        content: 'Hello! How can I help you today?',
+        sender: 'admin',
+        timestamp: new Date().toISOString(),
+        read: true,
+        delivered: true,
+      },
+      {
+        id: 'msg-2',
+        content: 'Hi there! I need help with my account.',
+        sender: 'client',
+        timestamp: new Date(Date.now() - 300000).toISOString(), // 5 minutes ago
+        read: true,
+        delivered: true,
+      },
+    ];
+    
+    setMessages(initialMessages);
+  }, [clientId]);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -212,115 +176,160 @@ export function MockChat({ clientId, clientName, onNewMessage, className }: Mock
   };
 
   const getConnectionStatusColor = () => {
-    switch (connectionStatus) {
-      case 'connected': return 'text-green-600';
-      case 'connecting': return 'text-yellow-600';
-      case 'disconnected': return 'text-red-600';
-      default: return 'text-gray-600';
-    }
+    return 'text-green-600'; // Always green for ONLINE
   };
 
   const getConnectionStatusText = () => {
-    switch (connectionStatus) {
-      case 'connected': return 'Connected';
-      case 'connecting': return 'Connecting...';
-      case 'disconnected': return 'Disconnected';
-      default: return 'Unknown';
-    }
+    return 'ONLINE'; // Always show ONLINE for demo
   };
 
   return (
-    <div className={cn('h-full flex flex-col bg-white', className)}>
-      <div className="p-4 border-b border-gray-200">
+    <div className={cn(
+      'h-full flex flex-col',
+      actualTheme === 'dark' ? 'bg-gray-900' : 'bg-white',
+      className
+    )}>
+      <div className={cn(
+        'p-4 border-b',
+        actualTheme === 'dark' 
+          ? 'border-gray-700 bg-gray-800' 
+          : 'border-gray-200 bg-gray-50'
+      )}>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <Avatar name={clientName} size="sm" />
+            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">
+              {clientName.split(' ').map(n => n[0]).join('').toUpperCase()}
+            </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">{clientName}</h3>
+              <h3 className={cn(
+                'text-lg font-semibold',
+                actualTheme === 'dark' ? 'text-white' : 'text-gray-900'
+              )}>{clientName}</h3>
               <div className="flex items-center space-x-2">
-                <div className={cn('w-2 h-2 rounded-full', {
-                  'bg-green-500': connectionStatus === 'connected',
-                  'bg-yellow-500': connectionStatus === 'connecting',
-                  'bg-red-500': connectionStatus === 'disconnected',
-                })} />
-                <span className={cn('text-sm', getConnectionStatusColor())}>
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+                <span className={cn(
+                  'text-sm',
+                  actualTheme === 'dark' ? 'text-gray-300' : 'text-gray-600',
+                  getConnectionStatusColor()
+                )}>
                   {getConnectionStatusText()}
                 </span>
               </div>
             </div>
           </div>
           <div className="flex items-center space-x-2">
-            <Button size="sm" variant="ghost">
+            <Button size="sm" variant="ghost" className={cn(
+              actualTheme === 'dark' 
+                ? 'text-gray-400 hover:text-white hover:bg-gray-700'
+                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200'
+            )}>
               <Phone className="h-4 w-4" />
             </Button>
-            <Button size="sm" variant="ghost">
+            <Button size="sm" variant="ghost" className={cn(
+              actualTheme === 'dark' 
+                ? 'text-gray-400 hover:text-white hover:bg-gray-700'
+                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200'
+            )}>
               <Video className="h-4 w-4" />
             </Button>
-            <Button size="sm" variant="ghost">
+            <Button size="sm" variant="ghost" className={cn(
+              actualTheme === 'dark' 
+                ? 'text-gray-400 hover:text-white hover:bg-gray-700'
+                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200'
+            )}>
               <MoreVertical className="h-4 w-4" />
             </Button>
           </div>
         </div>
       </div>
 
-              <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4" style={{ minHeight: '300px', maxHeight: '500px' }}>
+      <div className={cn(
+        'flex-1 flex flex-col overflow-hidden',
+        actualTheme === 'dark' ? 'bg-gray-900' : 'bg-white'
+      )}>
+        {/* Messages Area */}
+        <div className={cn(
+          'flex-1 overflow-y-auto p-4 space-y-4',
+          actualTheme === 'dark' ? 'bg-gray-900' : 'bg-white'
+        )}>
           {messages.map((message) => (
             <div
               key={message.id}
               className={cn(
-                'flex items-start space-x-2',
+                'flex items-start space-x-3 mb-4',
                 message.sender === 'admin' ? 'justify-end' : 'justify-start'
               )}
             >
               {message.sender === 'client' && (
-                <Avatar name={clientName} size="sm" />
+                <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center text-white text-sm font-semibold">
+                  {clientName.split(' ').map(n => n[0]).join('').toUpperCase()}
+                </div>
               )}
               
-              <div
-                className={cn(
-                  'max-w-xs lg:max-w-md px-4 py-2 rounded-lg',
-                  message.sender === 'admin'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-900'
-                )}
-              >
-                <p className="text-sm">{message.content}</p>
-                <div className="flex items-center justify-between mt-1">
+              <div className="flex flex-col max-w-xs lg:max-w-md">
+                <div className="flex items-center space-x-2 mb-1">
+                  <span className={cn(
+                    'text-xs font-medium',
+                    actualTheme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+                  )}>
+                    {message.sender === 'admin' ? 'Admin' : clientName}
+                  </span>
                   <span className={cn(
                     'text-xs',
-                    message.sender === 'admin' ? 'text-blue-100' : 'text-gray-500'
+                    actualTheme === 'dark' ? 'text-gray-500' : 'text-gray-400'
                   )}>
                     {formatTime(message.timestamp)}
                   </span>
+                </div>
+                
+                <div
+                  className={cn(
+                    'px-4 py-3 rounded-lg relative',
+                    message.sender === 'admin'
+                      ? actualTheme === 'dark' 
+                        ? 'bg-gray-700 text-white'
+                        : 'bg-gray-100 text-gray-900'
+                      : 'bg-blue-600 text-white'
+                  )}
+                >
+                  <p className="text-sm leading-relaxed">{message.content}</p>
+                  
                   {message.sender === 'admin' && (
-                    <div className="flex items-center space-x-1 ml-2">
-                      {message.delivered ? (
-                        message.read ? (
-                          <CheckCheck className="h-3 w-3 text-blue-200" />
+                    <div className="flex items-center justify-end mt-1">
+                      <div className="flex items-center space-x-1">
+                        {message.delivered ? (
+                          message.read ? (
+                            <CheckCheck className="h-3 w-3 text-gray-400" />
+                          ) : (
+                            <CheckCheck className="h-3 w-3 text-gray-400" />
+                          )
                         ) : (
-                          <CheckCheck className="h-3 w-3 text-blue-200" />
-                        )
-                      ) : (
-                        <Check className="h-3 w-3 text-blue-200" />
-                      )}
+                          <Check className="h-3 w-3 text-gray-400" />
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>
               </div>
 
               {message.sender === 'admin' && (
-                <Avatar name="Admin" size="sm" />
+                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-semibold">
+                  A
+                </div>
               )}
             </div>
           ))}
 
           {/* Typing Indicator */}
           {isTyping && (
-            <div className="flex items-start space-x-2">
-              <Avatar name={clientName} size="sm" />
-              <div className="bg-gray-100 px-4 py-2 rounded-lg">
+            <div className="flex items-start space-x-3">
+              <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center text-white text-sm font-semibold">
+                {clientName.split(' ').map(n => n[0]).join('').toUpperCase()}
+              </div>
+              <div className={cn(
+                'px-4 py-3 rounded-lg',
+                actualTheme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'
+              )}>
                 <div className="flex space-x-1">
                   <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
                   <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
@@ -332,31 +341,49 @@ export function MockChat({ clientId, clientName, onNewMessage, className }: Mock
 
           <div ref={messagesEndRef} />
         </div>
+      </div>
 
-        {/* Message Input */}
-        <div className="border-t border-gray-200 p-4">
-          <div className="flex items-center space-x-2">
-            <Button size="sm" variant="ghost">
-              <Smile className="h-4 w-4" />
-            </Button>
+      {/* Message Input */}
+      <div className={cn(
+        'border-t p-4',
+        actualTheme === 'dark' 
+          ? 'border-gray-700 bg-gray-800' 
+          : 'border-gray-200 bg-gray-50'
+      )}>
+        <div className="flex items-center space-x-3">
+          <Button size="sm" variant="ghost" className={cn(
+            actualTheme === 'dark' 
+              ? 'text-gray-400 hover:text-white hover:bg-gray-700'
+              : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200'
+          )}>
+            <Smile className="h-4 w-4" />
+          </Button>
+          <div className="flex-1 relative">
             <Input
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Type a message..."
+              placeholder="Type your message..."
               disabled={!isConnected}
-              className="flex-1"
+              className={cn(
+                'w-full',
+                actualTheme === 'dark' 
+                  ? 'bg-gray-700 border-gray-600 text-white placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500'
+                  : 'bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 focus:border-blue-500 focus:ring-blue-500'
+              )}
             />
-            <Button
-              onClick={sendMessage}
-              disabled={!newMessage.trim() || !isConnected}
-              size="sm"
-              className="bg-blue-600 hover:bg-blue-700"
-            >
-              <Send className="h-4 w-4" />
-            </Button>
           </div>
+          <Button
+            onClick={sendMessage}
+            disabled={!newMessage.trim()}
+            size="sm"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+          >
+            <Send className="h-4 w-4" />
+          </Button>
         </div>
+        
+        {/* Demo mode - no connection status needed */}
       </div>
     </div>
   );

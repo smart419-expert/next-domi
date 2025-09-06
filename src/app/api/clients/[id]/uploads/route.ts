@@ -1,14 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Mock data - in a real app, this would be stored in a database
-const clientUploads = new Map<string, any[]>();
+interface Upload {
+  id: string;
+  url: string;
+  name: string;
+  size: number;
+  type: string;
+  isFeatured: boolean;
+  uploadedAt: string;
+  clientId: string;
+}
+
+const clientUploads = new Map<string, Upload[]>();
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const clientId = params.id;
+    const { id: clientId } = await params;
     const uploads = clientUploads.get(clientId) || [];
     
     return NextResponse.json({
@@ -26,10 +37,10 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const clientId = params.id;
+    const { id: clientId } = await params;
     const body = await request.json();
     const { url, fileName, size, type } = body;
 

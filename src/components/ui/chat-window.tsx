@@ -30,12 +30,14 @@ export function ChatWindow({ clientId, clientName, className }: ChatWindowProps)
     provider: 'mock',
     clientId: '',
     customScript: '',
+    scriptUrl: '',
     isEnabled: true,
     useMockChat: true,
   });
   const [showSettings, setShowSettings] = useState(false);
   const [isProviderLoaded, setIsProviderLoaded] = useState(false);
   const [lastMessageCount, setLastMessageCount] = useState(0);
+  const [isClient, setIsClient] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const providerScriptRef = useRef<HTMLScriptElement | null>(null);
 
@@ -48,6 +50,11 @@ export function ChatWindow({ clientId, clientName, className }: ChatWindowProps)
     requestPermission,
     showChatNotification,
   } = useNotifications();
+
+  // Fix hydration issue by ensuring client-side rendering
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Load settings from localStorage on mount
   useEffect(() => {
@@ -188,7 +195,7 @@ export function ChatWindow({ clientId, clientName, className }: ChatWindowProps)
       />
 
       {/* Notification Permission Banner */}
-      {isSupported && !isGranted && (
+      {isClient && isSupported && !isGranted && (
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">

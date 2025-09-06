@@ -98,7 +98,7 @@ export const filesApi = {
 
   uploadFile: async (clientId: string, file: File) => {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', file as unknown as Blob);
     formData.append('name', file.name);
     
     const response = await api.post(`/clients/${clientId}/files`, formData, {

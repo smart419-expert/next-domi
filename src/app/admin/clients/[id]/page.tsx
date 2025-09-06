@@ -29,32 +29,41 @@ const client = {
   lastLogin: '2024-01-15T10:30:00Z',
   createdAt: '2024-01-01T00:00:00Z',
   avatar: null,
+  updatedAt: '2024-01-15T10:30:00Z',
+  nextUpdate: '2024-01-15T10:35:00Z',
+  lastMessageAt: '2024-01-15T10:30:00Z',
+  lastUploadAt: '2024-01-15T10:30:00Z',
+  unreadMessages: 0,
+  newUploads: 0,
 };
 
 const transactions = [
   {
     id: 'txn-1',
+    date: '2024-01-15T10:30:00Z',
     amount: 50.00,
+    balanceAfter: 200.00,
+    note: 'Payment received via PayPal',
+    adminName: 'Admin User',
     type: 'credit' as const,
-    reason: 'Payment received via PayPal',
-    timestamp: '2024-01-15T10:30:00Z',
-    status: 'completed' as const,
   },
   {
     id: 'txn-2',
+    date: '2024-01-14T15:45:00Z',
     amount: 25.00,
+    balanceAfter: 150.00,
+    note: 'Service fee',
+    adminName: 'Admin User',
     type: 'debit' as const,
-    reason: 'Service fee',
-    timestamp: '2024-01-14T15:45:00Z',
-    status: 'completed' as const,
   },
   {
     id: 'txn-3',
+    date: '2024-01-01T00:00:00Z',
     amount: 100.00,
+    balanceAfter: 175.00,
+    note: 'Initial deposit',
+    adminName: 'Admin User',
     type: 'credit' as const,
-    reason: 'Initial deposit',
-    timestamp: '2024-01-01T00:00:00Z',
-    status: 'completed' as const,
   },
 ];
 
@@ -104,14 +113,19 @@ const messages = [
 ];
 
 interface ClientPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default function ClientPage({ params }: ClientPageProps) {
   const [isBalanceModalOpen, setIsBalanceModalOpen] = useState(false);
   const [refreshInterval, setRefreshInterval] = useState(60000); // 60 seconds default
+  const [clientId, setClientId] = useState<string>('');
+
+  useEffect(() => {
+    params.then(({ id }) => setClientId(id));
+  }, [params]);
 
   // Use TanStack Query hooks for data fetching with polling
   const { 
@@ -119,45 +133,48 @@ export default function ClientPage({ params }: ClientPageProps) {
     isLoading: isClientLoading, 
     error: clientError,
     isFetching: isClientFetching 
-  } = useClientData(params.id, refreshInterval);
+  } = useClientData(clientId, refreshInterval);
 
   const { 
     data: messages, 
     isLoading: isMessagesLoading 
-  } = useClientMessages(params.id, 30000); // 30 seconds for messages
+  } = useClientMessages(clientId, 30000); // 30 seconds for messages
 
   const { 
     data: uploads, 
     isLoading: isUploadsLoading 
-  } = useClientUploads(params.id, 45000); // 45 seconds for uploads
+  } = useClientUploads(clientId, 45000); // 45 seconds for uploads
 
-  const triggerUpdateMutation = useTriggerUpdate(params.id);
+  const triggerUpdateMutation = useTriggerUpdate(clientId);
 
   // Mock transactions data (in real app, this would also use polling)
   const transactions: Transaction[] = [
     {
       id: 'txn-1',
+      date: '2024-01-15T10:30:00Z',
       amount: 50.00,
+      balanceAfter: 200.00,
+      note: 'Payment received via PayPal',
+      adminName: 'Admin User',
       type: 'credit' as const,
-      reason: 'Payment received via PayPal',
-      timestamp: '2024-01-15T10:30:00Z',
-      status: 'completed' as const,
     },
     {
       id: 'txn-2',
+      date: '2024-01-14T15:45:00Z',
       amount: 25.00,
+      balanceAfter: 150.00,
+      note: 'Service fee',
+      adminName: 'Admin User',
       type: 'debit' as const,
-      reason: 'Service fee',
-      timestamp: '2024-01-14T15:45:00Z',
-      status: 'completed' as const,
     },
     {
       id: 'txn-3',
+      date: '2024-01-01T00:00:00Z',
       amount: 100.00,
+      balanceAfter: 175.00,
+      note: 'Initial deposit',
+      adminName: 'Admin User',
       type: 'credit' as const,
-      reason: 'Initial deposit',
-      timestamp: '2024-01-01T00:00:00Z',
-      status: 'completed' as const,
     },
   ];
 
@@ -327,7 +344,7 @@ export default function ClientPage({ params }: ClientPageProps) {
             <ChatWindow
               clientId={currentClient.id}
               clientName={currentClient.name}
-              className="h-[600px]"
+              className="h-auto"
             />
 
             {/* Files Section */}

@@ -18,7 +18,7 @@ export function GoogleOAuthModal({ onClose, onLogin }: GoogleOAuthModalProps) {
   };
 
   return (
-    <Modal isOpen={true} onClose={onClose}>
+    <Modal open={true} onOpenChange={(open) => !open && onClose()}>
       <div className="p-6">
         <div className="text-center mb-6">
           <div className="flex justify-center mb-4">

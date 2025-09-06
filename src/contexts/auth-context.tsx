@@ -153,6 +153,7 @@ export const mockAuth = {
       id: '1',
       email,
       name: email.split('@')[0],
+      role: 'user',
       avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`
     };
     return mockUser;
@@ -164,6 +165,7 @@ export const mockAuth = {
       id: '2',
       email: 'user@gmail.com',
       name: 'Google User',
+      role: 'user',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=google'
     };
     return mockUser;
@@ -175,6 +177,7 @@ export const mockAuth = {
       id: '3',
       email: `${phone}@whatsapp.local`,
       name: `WhatsApp User (${phone})`,
+      role: 'user',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=whatsapp'
     };
     return mockUser;

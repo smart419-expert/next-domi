@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase-client';
 import { useAuth } from '@/contexts/auth-context';
@@ -14,7 +14,6 @@ import {
   Loader2, 
   ArrowRight, 
   CheckCircle2, 
-  AlertCircle,
   Shield
 } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -22,7 +21,7 @@ import { DemoLogin } from '@/components/demo-login';
 import { WhatsAppLogin } from '@/components/whatsapp-login';
 import { LoginHeader } from '@/components/login-header';
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { login } = useAuth();
@@ -91,7 +90,7 @@ export default function LoginPage() {
         setIsMagicLinkSent(true);
         toast.success('Magic link sent! Check your email.');
       }
-    } catch (error) {
+    } catch (_error) {
       toast.error('Something went wrong. Please try again.');
     } finally {
       setIsLoading(false);
@@ -116,7 +115,7 @@ export default function LoginPage() {
       setTimeout(() => {
         router.push('/dashboard');
       }, 1000);
-    } catch (error) {
+    } catch (_error) {
       toast.error('Something went wrong. Please try again.');
     } finally {
       setIsGoogleLoading(false);
@@ -143,7 +142,7 @@ export default function LoginPage() {
         setIsMagicLinkSent(true);
         toast.success('Invite accepted! Check your email for the magic link.');
       }
-    } catch (error) {
+    } catch (_error) {
       toast.error('Something went wrong. Please try again.');
     } finally {
       setIsLoading(false);
@@ -361,5 +360,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }

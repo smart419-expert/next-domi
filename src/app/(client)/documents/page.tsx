@@ -245,7 +245,7 @@ export default function ClientDocuments() {
                   Need a specific document?
                 </h3>
                 <p className="text-blue-700">
-                  Can't find what you're looking for? Contact us and we'll help you locate it.
+                  Can&apos;t find what you&apos;re looking for? Contact us and we&apos;ll help you locate it.
                 </p>
               </div>
               <Button className="bg-blue-600 hover:bg-blue-700">

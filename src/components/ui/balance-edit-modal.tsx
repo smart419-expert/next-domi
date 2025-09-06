@@ -23,6 +23,12 @@ export interface BalanceEditData {
   transactionAmount: number;
 }
 
+interface BalanceEditErrors {
+  newBalance?: string;
+  changeReason?: string;
+  transactionAmount?: string;
+}
+
 export function BalanceEditModal({ 
   isOpen, 
   onClose, 
@@ -36,7 +42,7 @@ export function BalanceEditModal({
     transactionAmount: 0
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<Partial<BalanceEditData>>({});
+  const [errors, setErrors] = useState<BalanceEditErrors>({});
 
   const handleInputChange = (field: keyof BalanceEditData, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -52,7 +58,7 @@ export function BalanceEditModal({
   };
 
   const validateForm = (): boolean => {
-    const newErrors: Partial<BalanceEditData> = {};
+    const newErrors: BalanceEditErrors = {};
 
     if (!formData.changeReason.trim()) {
       newErrors.changeReason = 'Change reason is required';

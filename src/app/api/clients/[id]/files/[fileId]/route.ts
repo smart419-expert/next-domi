@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string; fileId: string } }
+  { params }: { params: Promise<{ id: string; fileId: string }> }
 ) {
   try {
-    const { id, fileId } = params;
+    const { id, fileId } = await params;
 
     // In a real implementation, you would:
     // 1. Verify authentication

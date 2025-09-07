@@ -16,6 +16,22 @@ export function LanguageSelector() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const currentLanguage = languages.find(lang => lang.code === language);
 
+  // Force re-render when language changes
+  const [, forceUpdate] = useState({});
+  
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      forceUpdate({});
+    };
+    
+    if (typeof window !== 'undefined') {
+      window.addEventListener('languageChanged', handleLanguageChange);
+      return () => {
+        window.removeEventListener('languageChanged', handleLanguageChange);
+      };
+    }
+  }, []);
+
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -32,7 +48,9 @@ export function LanguageSelector() {
 
   const handleLanguageChange = (langCode: 'en' | 'es') => {
     console.log('Language selector clicked:', langCode);
+    console.log('Current language before change:', language);
     setLanguage(langCode);
+    console.log('Language set to:', langCode);
     setIsOpen(false);
   };
 

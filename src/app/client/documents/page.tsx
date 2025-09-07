@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useLanguage } from '@/contexts/language-context';
 import { 
   FileText, 
   Download, 
@@ -18,6 +19,7 @@ import {
 } from 'lucide-react';
 
 export default function ClientDocuments() {
+  const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
 
@@ -96,15 +98,15 @@ export default function ClientDocuments() {
   const getStatusText = (status: string) => {
     switch (status) {
       case 'new':
-        return 'New';
+        return t('client.documents.status.new');
       case 'viewed':
-        return 'Viewed';
+        return t('client.documents.status.viewed');
       case 'signed':
-        return 'Signed';
+        return t('client.documents.status.signed');
       case 'pending':
-        return 'Pending';
+        return t('client.documents.status.pending');
       default:
-        return 'Unknown';
+        return t('client.documents.status.unknown');
     }
   };
 
@@ -119,9 +121,9 @@ export default function ClientDocuments() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Documents</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('client.documents.title')}</h1>
         <p className="text-gray-600">
-          Access and manage your account documents and reports.
+          {t('client.documents.description')}
         </p>
       </div>
 
@@ -130,7 +132,7 @@ export default function ClientDocuments() {
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
           <Input
-            placeholder="Search documents..."
+            placeholder={t('client.documents.search_placeholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10"
@@ -141,25 +143,25 @@ export default function ClientDocuments() {
             variant={filterStatus === 'all' ? 'default' : 'outline'}
             onClick={() => setFilterStatus('all')}
           >
-            All
+            {t('client.documents.filter.all')}
           </Button>
           <Button
             variant={filterStatus === 'new' ? 'default' : 'outline'}
             onClick={() => setFilterStatus('new')}
           >
-            New
+            {t('client.documents.filter.new')}
           </Button>
           <Button
             variant={filterStatus === 'viewed' ? 'default' : 'outline'}
             onClick={() => setFilterStatus('viewed')}
           >
-            Viewed
+            {t('client.documents.filter.viewed')}
           </Button>
           <Button
             variant={filterStatus === 'pending' ? 'default' : 'outline'}
             onClick={() => setFilterStatus('pending')}
           >
-            Pending
+            {t('client.documents.filter.pending')}
           </Button>
         </div>
       </div>
@@ -211,11 +213,11 @@ export default function ClientDocuments() {
                 <div className="flex space-x-2">
                   <Button size="sm" variant="outline" className="flex-1 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
                     <Eye className="h-4 w-4 mr-1" />
-                    View
+                    {t('client.documents.actions.view')}
                   </Button>
                   <Button size="sm" variant="outline" className="flex-1 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
                     <Download className="h-4 w-4 mr-1" />
-                    Download
+                    {t('client.documents.actions.download')}
                   </Button>
                 </div>
               </div>
@@ -228,9 +230,9 @@ export default function ClientDocuments() {
       {filteredDocuments.length === 0 && (
         <div className="text-center py-12">
           <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No documents found</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">{t('client.documents.empty.title')}</h3>
           <p className="text-gray-500">
-            {searchTerm ? 'Try adjusting your search terms.' : 'No documents match the selected filter.'}
+            {searchTerm ? t('client.documents.empty.search') : t('client.documents.empty.filter')}
           </p>
         </div>
       )}
@@ -242,14 +244,14 @@ export default function ClientDocuments() {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-medium text-blue-900 mb-1">
-                  Need a specific document?
+                  {t('client.documents.request.title')}
                 </h3>
                 <p className="text-blue-700">
-                  Can&apos;t find what you&apos;re looking for? Contact us and we&apos;ll help you locate it.
+                  {t('client.documents.request.description')}
                 </p>
               </div>
               <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                Request Document
+                {t('client.documents.request.button')}
               </Button>
             </div>
           </CardContent>

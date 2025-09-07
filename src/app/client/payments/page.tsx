@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useLanguage } from '@/contexts/language-context';
 import { 
   CreditCard, 
   DollarSign, 
@@ -19,6 +20,7 @@ import {
 } from 'lucide-react';
 
 export default function ClientPayments() {
+  const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
 
@@ -86,13 +88,13 @@ export default function ClientPayments() {
   const getStatusText = (status: string) => {
     switch (status) {
       case 'completed':
-        return 'Completed';
+        return t('client.payments.status.completed');
       case 'pending':
-        return 'Pending';
+        return t('client.payments.status.pending');
       case 'failed':
-        return 'Failed';
+        return t('client.payments.status.failed');
       default:
-        return 'Unknown';
+        return t('client.payments.status.unknown');
     }
   };
 
@@ -124,9 +126,9 @@ export default function ClientPayments() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Payments</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('client.payments.title')}</h1>
         <p className="text-gray-600">
-          Manage your payments and view transaction history.
+          {t('client.payments.description')}
         </p>
       </div>
 
@@ -134,33 +136,33 @@ export default function ClientPayments() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Paid</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('client.payments.total_paid')}</CardTitle>
             <DollarSign className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-600">
               ${totalAmount.toLocaleString()}
             </div>
-            <p className="text-xs text-gray-500">All time</p>
+            <p className="text-xs text-gray-500">{t('client.payments.all_time')}</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('client.payments.pending')}</CardTitle>
             <Clock className="h-4 w-4 text-yellow-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-yellow-600">
               {payments.filter(p => p.status === 'pending').length}
             </div>
-            <p className="text-xs text-gray-500">Transactions</p>
+            <p className="text-xs text-gray-500">{t('client.payments.transactions')}</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">This Month</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('client.payments.this_month')}</CardTitle>
             <Calendar className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
@@ -170,7 +172,7 @@ export default function ClientPayments() {
                 .reduce((sum, p) => sum + p.amount, 0)
                 .toLocaleString()}
             </div>
-            <p className="text-xs text-gray-500">December 2024</p>
+            <p className="text-xs text-gray-500">{t('client.payments.december_2024')}</p>
           </CardContent>
         </Card>
       </div>
@@ -180,7 +182,7 @@ export default function ClientPayments() {
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
           <Input
-            placeholder="Search payments..."
+            placeholder={t('client.payments.search_placeholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10"
@@ -191,25 +193,25 @@ export default function ClientPayments() {
             variant={filterStatus === 'all' ? 'default' : 'outline'}
             onClick={() => setFilterStatus('all')}
           >
-            All
+            {t('client.payments.filter.all')}
           </Button>
           <Button
             variant={filterStatus === 'completed' ? 'default' : 'outline'}
             onClick={() => setFilterStatus('completed')}
           >
-            Completed
+            {t('client.payments.filter.completed')}
           </Button>
           <Button
             variant={filterStatus === 'pending' ? 'default' : 'outline'}
             onClick={() => setFilterStatus('pending')}
           >
-            Pending
+            {t('client.payments.filter.pending')}
           </Button>
           <Button
             variant={filterStatus === 'failed' ? 'default' : 'outline'}
             onClick={() => setFilterStatus('failed')}
           >
-            Failed
+            {t('client.payments.filter.failed')}
           </Button>
         </div>
       </div>
@@ -221,20 +223,20 @@ export default function ClientPayments() {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-medium text-blue-900 mb-1">
-                  Make a Payment
+                  {t('client.payments.make_payment')}
                 </h3>
                 <p className="text-blue-700">
-                  Process new payments or manage your payment methods.
+                  {t('client.payments.make_payment_desc')}
                 </p>
               </div>
               <div className="flex space-x-2">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                   <CreditCard className="h-4 w-4 mr-2" />
-                  New Payment
+                  {t('client.payments.new_payment')}
                 </Button>
                 <Button variant="outline" className="border-blue-300 text-blue-700 hover:bg-blue-100">
                   <DollarSign className="h-4 w-4 mr-2" />
-                  Add Funds
+                  {t('client.payments.add_funds')}
                 </Button>
               </div>
             </div>
@@ -245,9 +247,9 @@ export default function ClientPayments() {
       {/* Payments List */}
       <Card>
         <CardHeader>
-          <CardTitle>Payment History</CardTitle>
+          <CardTitle>{t('client.payments.payment_history')}</CardTitle>
           <CardDescription>
-            Your recent payment transactions and status
+            {t('client.payments.payment_history_desc')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -297,9 +299,9 @@ export default function ClientPayments() {
           {filteredPayments.length === 0 && (
             <div className="text-center py-12">
               <CreditCard className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No payments found</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">{t('client.payments.empty.title')}</h3>
               <p className="text-gray-500">
-                {searchTerm ? 'Try adjusting your search terms.' : 'No payments match the selected filter.'}
+                {searchTerm ? t('client.payments.empty.search') : t('client.payments.empty.filter')}
               </p>
             </div>
           )}

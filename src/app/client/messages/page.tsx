@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { useLanguage } from '@/contexts/language-context';
 import { 
   MessageSquare, 
   Send, 
@@ -20,6 +21,7 @@ import {
 } from 'lucide-react';
 
 export default function ClientMessages() {
+  const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedConversation, setSelectedConversation] = useState(1);
   const [newMessage, setNewMessage] = useState('');
@@ -99,9 +101,9 @@ export default function ClientMessages() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Messages</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('client.messages.title')}</h1>
         <p className="text-gray-600">
-          Communicate with your financial team and get support.
+          {t('client.messages.description')}
         </p>
       </div>
 
@@ -111,16 +113,16 @@ export default function ClientMessages() {
           <Card className="h-full">
             <CardHeader>
               <div className="flex items-center justify-between mb-4">
-                <CardTitle>Conversations</CardTitle>
+                <CardTitle>{t('client.messages.conversations')}</CardTitle>
                 <Button size="sm">
                   <MessageSquare className="h-4 w-4 mr-1" />
-                  New Chat
+                  {t('client.messages.new_chat')}
                 </Button>
               </div>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
-                  placeholder="Search conversations..."
+                  placeholder={t('client.messages.search_placeholder')}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10"
@@ -193,7 +195,7 @@ export default function ClientMessages() {
                     <div className="ml-auto flex items-center space-x-2">
                       <Button variant="outline" size="sm">
                         <Calendar className="h-4 w-4 mr-1" />
-                        Schedule
+                        {t('client.messages.schedule')}
                       </Button>
                     </div>
                   </div>
@@ -234,7 +236,7 @@ export default function ClientMessages() {
                     </Button>
                     <div className="flex-1">
                       <Textarea
-                        placeholder="Type your message..."
+                        placeholder={t('client.messages.input_placeholder')}
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
                         className="min-h-[40px] max-h-32 resize-none"
@@ -256,8 +258,8 @@ export default function ClientMessages() {
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center">
                   <MessageSquare className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">Select a conversation</h3>
-                  <p className="text-gray-500">Choose a conversation from the list to start messaging.</p>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">{t('client.messages.select_conversation')}</h3>
+                  <p className="text-gray-500">{t('client.messages.select_conversation_desc')}</p>
                 </div>
               </div>
             )}

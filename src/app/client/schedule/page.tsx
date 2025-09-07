@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { useLanguageChange } from '@/contexts/language-context';
+import { useLanguage } from '@/contexts/language-context';
 import { 
   Calendar, 
   Clock, 
@@ -21,82 +21,8 @@ import {
 } from 'lucide-react';
 
 export default function ClientSchedule() {
-  const language = useLanguageChange();
+  const { t } = useLanguage();
   const [showNewMeeting, setShowNewMeeting] = useState(false);
-  
-  // Simple translation function for this page
-  const t = (key: string) => {
-    const translations: Record<string, Record<string, string>> = {
-      en: {
-        'schedule.title': 'Schedule',
-        'schedule.description': 'Manage your meetings and appointments with your financial team.',
-        'schedule.schedule_meeting': 'Schedule Meeting',
-        'schedule.upcoming': 'Upcoming',
-        'schedule.this_month': 'This Month',
-        'schedule.completed': 'Completed',
-        'schedule.meetings_scheduled': 'Meetings scheduled',
-        'schedule.december_2024': 'December 2024',
-        'schedule.total_meetings': 'Total meetings',
-        'schedule.new_meeting': 'Schedule New Meeting',
-        'schedule.create_meeting': 'Create a new meeting with your financial advisor',
-        'schedule.meeting_title': 'Meeting Title',
-        'schedule.date': 'Date',
-        'schedule.time': 'Time',
-        'schedule.meeting_type': 'Meeting Type',
-        'schedule.video_call': 'Video Call',
-        'schedule.in_person': 'In-Person',
-        'schedule.phone_call': 'Phone Call',
-        'schedule.notes_optional': 'Notes (Optional)',
-        'schedule.any_additional_notes': 'Any additional notes or agenda items...',
-        'schedule.cancel': 'Cancel',
-        'schedule.upcoming_meetings': 'Upcoming Meetings',
-        'schedule.scheduled_meetings': 'Your scheduled meetings and appointments',
-        'schedule.meeting_history': 'Meeting History',
-        'schedule.completed_meetings': 'Your completed meetings and appointments',
-        'schedule.no_upcoming_meetings': 'No upcoming meetings',
-        'schedule.schedule_meeting_to_start': 'Schedule a meeting to get started.',
-        'schedule.no_completed_meetings': 'No completed meetings',
-        'schedule.meeting_history_will_appear': 'Your meeting history will appear here.',
-        'schedule.cancelled': 'Cancelled',
-        'schedule.unknown': 'Unknown',
-      },
-      es: {
-        'schedule.title': 'Programar',
-        'schedule.description': 'Gestiona tus reuniones y citas con tu equipo financiero.',
-        'schedule.schedule_meeting': 'Programar Reunión',
-        'schedule.upcoming': 'Próximas',
-        'schedule.this_month': 'Este Mes',
-        'schedule.completed': 'Completadas',
-        'schedule.meetings_scheduled': 'Reuniones programadas',
-        'schedule.december_2024': 'Diciembre 2024',
-        'schedule.total_meetings': 'Total de reuniones',
-        'schedule.new_meeting': 'Programar Nueva Reunión',
-        'schedule.create_meeting': 'Crear una nueva reunión con tu asesor financiero',
-        'schedule.meeting_title': 'Título de la Reunión',
-        'schedule.date': 'Fecha',
-        'schedule.time': 'Hora',
-        'schedule.meeting_type': 'Tipo de Reunión',
-        'schedule.video_call': 'Llamada de Video',
-        'schedule.in_person': 'En Persona',
-        'schedule.phone_call': 'Llamada Telefónica',
-        'schedule.notes_optional': 'Notas (Opcional)',
-        'schedule.any_additional_notes': 'Cualquier nota adicional o elementos de agenda...',
-        'schedule.cancel': 'Cancelar',
-        'schedule.upcoming_meetings': 'Reuniones Próximas',
-        'schedule.scheduled_meetings': 'Tus reuniones y citas programadas',
-        'schedule.meeting_history': 'Historial de Reuniones',
-        'schedule.completed_meetings': 'Tus reuniones y citas completadas',
-        'schedule.no_upcoming_meetings': 'No hay reuniones próximas',
-        'schedule.schedule_meeting_to_start': 'Programa una reunión para comenzar.',
-        'schedule.no_completed_meetings': 'No hay reuniones completadas',
-        'schedule.meeting_history_will_appear': 'Tu historial de reuniones aparecerá aquí.',
-        'schedule.cancelled': 'Cancelada',
-        'schedule.unknown': 'Desconocida',
-      }
-    };
-    
-    return translations[language]?.[key] || key;
-  };
   const [newMeeting, setNewMeeting] = useState({
     title: '',
     date: '',
@@ -164,13 +90,13 @@ export default function ClientSchedule() {
   const getStatusText = (status: string) => {
     switch (status) {
       case 'upcoming':
-        return t('schedule.upcoming');
+        return t('client.schedule.upcoming');
       case 'completed':
-        return t('schedule.completed');
+        return t('client.schedule.completed');
       case 'cancelled':
-        return t('schedule.cancelled');
+        return t('client.schedule.cancelled');
       default:
-        return t('schedule.unknown');
+        return t('client.schedule.unknown');
     }
   };
 
@@ -222,14 +148,14 @@ export default function ClientSchedule() {
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('schedule.title')}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('client.schedule.title')}</h1>
             <p className="text-gray-600">
-              {t('schedule.description')}
+              {t('client.schedule.description')}
             </p>
           </div>
           <Button onClick={() => setShowNewMeeting(true)}>
             <Plus className="h-4 w-4 mr-2" />
-            {t('schedule.schedule_meeting')}
+            {t('client.schedule.schedule_meeting')}
           </Button>
         </div>
       </div>
@@ -238,40 +164,40 @@ export default function ClientSchedule() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t('schedule.upcoming')}</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('client.schedule.upcoming')}</CardTitle>
             <Clock className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-blue-600">
               {upcomingMeetings.length}
             </div>
-            <p className="text-xs text-gray-500">{t('schedule.meetings_scheduled')}</p>
+            <p className="text-xs text-gray-500">{t('client.schedule.meetings_scheduled')}</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t('schedule.this_month')}</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('client.schedule.this_month')}</CardTitle>
             <Calendar className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-600">
               {meetings.filter(m => m.date.startsWith('2024-12')).length}
             </div>
-            <p className="text-xs text-gray-500">{t('schedule.december_2024')}</p>
+            <p className="text-xs text-gray-500">{t('client.schedule.december_2024')}</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t('schedule.completed')}</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('client.schedule.completed')}</CardTitle>
             <CheckCircle className="h-4 w-4 text-purple-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-purple-600">
               {completedMeetings.length}
             </div>
-            <p className="text-xs text-gray-500">{t('schedule.total_meetings')}</p>
+            <p className="text-xs text-gray-500">{t('client.schedule.total_meetings')}</p>
           </CardContent>
         </Card>
       </div>
@@ -281,14 +207,14 @@ export default function ClientSchedule() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <Card className="w-full max-w-md mx-4">
             <CardHeader>
-              <CardTitle>{t('schedule.new_meeting')}</CardTitle>
+              <CardTitle>{t('client.schedule.new_meeting')}</CardTitle>
               <CardDescription>
-                {t('schedule.create_meeting')}
+                {t('client.schedule.create_meeting')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label htmlFor="title">{t('schedule.meeting_title')}</Label>
+                <Label htmlFor="title">{t('client.schedule.meeting_title')}</Label>
                 <Input
                   id="title"
                   value={newMeeting.title}
@@ -298,7 +224,7 @@ export default function ClientSchedule() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="date">{t('schedule.date')}</Label>
+                  <Label htmlFor="date">{t('client.schedule.date')}</Label>
                   <Input
                     id="date"
                     type="date"
@@ -307,7 +233,7 @@ export default function ClientSchedule() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="time">{t('schedule.time')}</Label>
+                  <Label htmlFor="time">{t('client.schedule.time')}</Label>
                   <Input
                     id="time"
                     type="time"
@@ -317,33 +243,33 @@ export default function ClientSchedule() {
                 </div>
               </div>
               <div>
-                <Label htmlFor="type">{t('schedule.meeting_type')}</Label>
+                <Label htmlFor="type">{t('client.schedule.meeting_type')}</Label>
                 <select
                   id="type"
                   value={newMeeting.type}
                   onChange={(e) => setNewMeeting({...newMeeting, type: e.target.value})}
                   className="w-full p-2 border border-gray-300 rounded-md"
                 >
-                  <option value="video">{t('schedule.video_call')}</option>
-                  <option value="in-person">{t('schedule.in_person')}</option>
-                  <option value="phone">{t('schedule.phone_call')}</option>
+                  <option value="video">{t('client.schedule.video_call')}</option>
+                  <option value="in-person">{t('client.schedule.in_person')}</option>
+                  <option value="phone">{t('client.schedule.phone_call')}</option>
                 </select>
               </div>
               <div>
-                <Label htmlFor="notes">{t('schedule.notes_optional')}</Label>
+                <Label htmlFor="notes">{t('client.schedule.notes_optional')}</Label>
                 <Textarea
                   id="notes"
                   value={newMeeting.notes}
                   onChange={(e) => setNewMeeting({...newMeeting, notes: e.target.value})}
-                  placeholder={t('schedule.any_additional_notes')}
+                  placeholder={t('client.schedule.any_additional_notes')}
                 />
               </div>
               <div className="flex space-x-2">
                 <Button onClick={handleCreateMeeting} className="flex-1">
-                  {t('schedule.schedule_meeting')}
+                  {t('client.schedule.schedule_meeting_button')}
                 </Button>
                 <Button variant="outline" onClick={() => setShowNewMeeting(false)}>
-                  {t('schedule.cancel')}
+                  {t('client.schedule.cancel')}
                 </Button>
               </div>
             </CardContent>
@@ -354,9 +280,9 @@ export default function ClientSchedule() {
       {/* Upcoming Meetings */}
       <Card className="mb-8">
         <CardHeader>
-          <CardTitle>{t('schedule.upcoming_meetings')}</CardTitle>
+          <CardTitle>{t('client.schedule.upcoming_meetings')}</CardTitle>
           <CardDescription>
-            {t('schedule.scheduled_meetings')}
+            {t('client.schedule.scheduled_meetings')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -399,8 +325,8 @@ export default function ClientSchedule() {
           {upcomingMeetings.length === 0 && (
             <div className="text-center py-8">
               <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">{t('schedule.no_upcoming_meetings')}</h3>
-              <p className="text-gray-500">{t('schedule.schedule_meeting_to_start')}</p>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">{t('client.schedule.no_upcoming_meetings')}</h3>
+              <p className="text-gray-500">{t('client.schedule.schedule_meeting_to_start')}</p>
             </div>
           )}
         </CardContent>
@@ -409,9 +335,9 @@ export default function ClientSchedule() {
       {/* Meeting History */}
       <Card>
         <CardHeader>
-          <CardTitle>{t('schedule.meeting_history')}</CardTitle>
+          <CardTitle>{t('client.schedule.meeting_history')}</CardTitle>
           <CardDescription>
-            {t('schedule.completed_meetings')}
+            {t('client.schedule.completed_meetings')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -451,8 +377,8 @@ export default function ClientSchedule() {
           {completedMeetings.length === 0 && (
             <div className="text-center py-8">
               <CheckCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">{t('schedule.no_completed_meetings')}</h3>
-              <p className="text-gray-500">{t('schedule.meeting_history_will_appear')}</p>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">{t('client.schedule.no_completed_meetings')}</h3>
+              <p className="text-gray-500">{t('client.schedule.meeting_history_will_appear')}</p>
             </div>
           )}
         </CardContent>

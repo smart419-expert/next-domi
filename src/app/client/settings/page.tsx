@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
+import { useLanguage } from '@/contexts/language-context';
 import { 
   Settings, 
   User, 
@@ -22,6 +23,7 @@ import {
 } from 'lucide-react';
 
 export default function ClientSettings() {
+  const { t } = useLanguage();
   const [showPassword, setShowPassword] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   
@@ -70,9 +72,9 @@ export default function ClientSettings() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Settings</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('client.settings.title')}</h1>
         <p className="text-gray-600">
-          Manage your account settings and preferences.
+          {t('client.settings.description')}
         </p>
       </div>
 
@@ -84,10 +86,10 @@ export default function ClientSettings() {
               <div>
                 <CardTitle className="flex items-center">
                   <User className="h-5 w-5 mr-2" />
-                  Profile Information
+                  {t('client.settings.profile.title')}
                 </CardTitle>
                 <CardDescription>
-                  Update your personal information and contact details
+                  {t('client.settings.profile.description')}
                 </CardDescription>
               </div>
               <Button
@@ -95,14 +97,14 @@ export default function ClientSettings() {
                 onClick={() => setIsEditing(!isEditing)}
               >
                 {isEditing ? <Save className="h-4 w-4 mr-2" /> : <Edit className="h-4 w-4 mr-2" />}
-                {isEditing ? 'Save Changes' : 'Edit Profile'}
+                {isEditing ? t('client.settings.profile.save_changes') : t('client.settings.profile.edit_profile')}
               </Button>
             </div>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <Label htmlFor="firstName">First Name</Label>
+                <Label htmlFor="firstName">{t('client.settings.profile.first_name')}</Label>
                 <Input
                   id="firstName"
                   value={profile.firstName}
@@ -111,7 +113,7 @@ export default function ClientSettings() {
                 />
               </div>
               <div>
-                <Label htmlFor="lastName">Last Name</Label>
+                <Label htmlFor="lastName">{t('client.settings.profile.last_name')}</Label>
                 <Input
                   id="lastName"
                   value={profile.lastName}
@@ -122,7 +124,7 @@ export default function ClientSettings() {
             </div>
             
             <div>
-              <Label htmlFor="email">Email Address</Label>
+              <Label htmlFor="email">{t('client.settings.profile.email')}</Label>
               <Input
                 id="email"
                 type="email"
@@ -133,7 +135,7 @@ export default function ClientSettings() {
             </div>
             
             <div>
-              <Label htmlFor="phone">Phone Number</Label>
+              <Label htmlFor="phone">{t('client.settings.profile.phone')}</Label>
               <Input
                 id="phone"
                 type="tel"
@@ -144,7 +146,7 @@ export default function ClientSettings() {
             </div>
             
             <div>
-              <Label htmlFor="address">Address</Label>
+              <Label htmlFor="address">{t('client.settings.profile.address')}</Label>
               <Input
                 id="address"
                 value={profile.address}
@@ -154,7 +156,7 @@ export default function ClientSettings() {
             </div>
             
             <div>
-              <Label htmlFor="bio">Bio</Label>
+              <Label htmlFor="bio">{t('client.settings.profile.bio')}</Label>
               <Textarea
                 id="bio"
                 value={profile.bio}
@@ -168,10 +170,10 @@ export default function ClientSettings() {
               <div className="flex space-x-2">
                 <Button onClick={handleSaveProfile}>
                   <Save className="h-4 w-4 mr-2" />
-                  Save Changes
+                  {t('client.settings.profile.save_changes')}
                 </Button>
                 <Button variant="outline" onClick={() => setIsEditing(false)}>
-                  Cancel
+                  {t('client.settings.profile.cancel')}
                 </Button>
               </div>
             )}

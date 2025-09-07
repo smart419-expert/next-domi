@@ -285,8 +285,8 @@ export function ImageGallery({
       onDrop={handleDrop}
     >
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <div>
+        <div className="flex flex-col 425px:flex-row 425px:items-center 425px:justify-between gap-4">
+          <div className="flex-1">
             <CardTitle className="flex items-center text-gray-900 dark:text-white">
               <ImageIcon className="h-5 w-5 mr-2" />
               {title}
@@ -327,7 +327,7 @@ export function ImageGallery({
         </div>
 
         {/* Search and Filter */}
-        <div className="flex flex-col sm:flex-row gap-4 mt-4">
+        <div className="flex flex-col 425px:flex-row gap-4 mt-4">
           {onSearchChange && (
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
@@ -387,7 +387,7 @@ export function ImageGallery({
         ) : (
           <div className={cn(
             viewMode === 'grid' 
-              ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'
+              ? 'grid grid-cols-1 425px:grid-cols-2 sm:grid-cols-2 725px:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4'
               : 'space-y-4'
           )}>
             {filteredImages.map((image, index) => (

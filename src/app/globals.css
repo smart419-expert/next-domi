@@ -2,6 +2,103 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hide scrollbars but keep functionality */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* WebKit */
+}
+
+/* Ensure all elements respect the no-scrollbar rule */
+html, body, div, main, section, article, aside, nav, header, footer {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+div::-webkit-scrollbar,
+main::-webkit-scrollbar,
+section::-webkit-scrollbar,
+article::-webkit-scrollbar,
+aside::-webkit-scrollbar,
+nav::-webkit-scrollbar,
+header::-webkit-scrollbar,
+footer::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ensure smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Fix for webkit browsers */
+body {
+  overflow-x: hidden;
+}
+
+/* Ensure no scrollbars on main containers */
+.main-container {
+  overflow-x: hidden;
+}
+
+/* Fix for dropdowns and modals */
+.dropdown-content,
+.modal-content {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.dropdown-content::-webkit-scrollbar,
+.modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ensure proper overflow handling */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
+
+/* Fix for header text truncation */
+.header-container {
+  min-width: 0;
+  flex: 1;
+}
+
+.header-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ensure language selector displays properly */
+.language-selector {
+  flex-shrink: 0;
+  min-width: fit-content;
+}
+
+/* Fix for any remaining scrollbar issues */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Clean White Dashboard Theme */
 :root {
   /* Primary Colors - Blue theme */

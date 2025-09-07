@@ -9,6 +9,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        '425px': '425px',
+        '725px': '725px',
+      },
       colors: {
         primary: {
           50: 'rgb(var(--primary-50))',

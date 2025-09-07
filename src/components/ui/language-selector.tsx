@@ -59,27 +59,26 @@ export function LanguageSelector() {
       <Button
         variant="ghost"
         size="sm"
-        className="text-slate-500 hover:text-slate-700 flex items-center space-x-1"
+        className="text-slate-500 hover:text-slate-700 flex items-center space-x-1 min-w-0 p-1 sm:p-2"
         aria-label={`Current language: ${currentLanguage?.name}`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <Globe className="h-4 w-4" />
-        <span className="text-sm font-medium">{currentLanguage?.flag}</span>
-        <span className="text-xs text-slate-400">{currentLanguage?.code.toUpperCase()}</span>
+        <Globe className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+        <span className="text-xs sm:text-sm font-medium whitespace-nowrap">{currentLanguage?.flag}</span>
       </Button>
       
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-slate-200 rounded-lg shadow-lg z-50 max-h-64 overflow-y-auto animate-in slide-in-from-top-2 duration-200">
+        <div className="absolute right-0 top-full mt-1 sm:mt-2 w-36 sm:w-48 bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-lg shadow-lg z-50 animate-in slide-in-from-top-2 duration-200 overflow-hidden">
           {languages.map((lang) => (
             <button
               key={lang.code}
               onClick={() => handleLanguageChange(lang.code)}
-              className={`w-full flex items-center px-3 py-2 text-sm text-left hover:bg-slate-50 first:rounded-t-lg last:rounded-b-lg transition-colors duration-150 ${
-                language === lang.code ? 'bg-blue-50 text-blue-700' : 'text-slate-700'
+              className={`w-full flex items-center px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm text-left hover:bg-slate-50 dark:hover:bg-gray-700 first:rounded-t-lg last:rounded-b-lg transition-colors duration-150 whitespace-nowrap ${
+                language === lang.code ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300' : 'text-slate-700 dark:text-gray-300'
               }`}
             >
-              <span className="mr-2">{lang.flag}</span>
-              {lang.name}
+              <span className="mr-1 sm:mr-2 flex-shrink-0">{lang.flag}</span>
+              <span className="truncate">{lang.name}</span>
             </button>
           ))}
         </div>

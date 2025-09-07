@@ -14,7 +14,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 flex overflow-x-hidden">
       {/* Sidebar */}
       <ClientSidebar 
         isOpen={isSidebarOpen}
@@ -22,7 +22,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col lg:ml-0">
+      <div className="flex-1 flex flex-col lg:ml-0 overflow-x-hidden">
         {/* Header */}
         <ClientHeader 
           onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -30,7 +30,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
         />
 
         {/* Main Content */}
-        <main className="flex-1">
+        <main className="flex-1 overflow-x-hidden">
           {children}
         </main>
 

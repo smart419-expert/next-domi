@@ -169,17 +169,17 @@ export function ClientImageGallery() {
 
       {/* Quick Actions */}
       <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-medium text-blue-900 dark:text-blue-100 mb-1">
+        <CardContent className="p-4 sm:p-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex-1">
+              <h3 className="text-base sm:text-lg font-medium text-blue-900 dark:text-blue-100 mb-1">
                 {t('client.documents.need_report')}
               </h3>
-              <p className="text-blue-700 dark:text-blue-300">
+              <p className="text-sm sm:text-base text-blue-700 dark:text-blue-300">
                 {t('client.documents.request_custom')}
               </p>
             </div>
-            <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white">
+            <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white w-full sm:w-auto">
               {t('client.documents.request_report')}
             </Button>
           </div>

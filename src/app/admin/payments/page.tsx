@@ -94,15 +94,6 @@ export default function PaymentsPage() {
       type: 'link' as const
     },
     {
-      id: 'bank',
-      name: 'Bank Transfer',
-      description: 'Direct bank transfer',
-      icon: BankIcon,
-      color: 'bg-gray-50 border-gray-200 text-gray-700',
-      hoverColor: 'hover:bg-gray-100',
-      type: 'qr' as const
-    },
-    {
       id: 'zelle',
       name: 'Zelle',
       description: 'Send money with Zelle',
@@ -118,6 +109,15 @@ export default function PaymentsPage() {
       icon: CashAppIcon,
       color: 'bg-green-50 border-green-200 text-green-700',
       hoverColor: 'hover:bg-green-100',
+      type: 'qr' as const
+    },
+    {
+      id: 'chime',
+      name: 'Chime',
+      description: 'Banking with Chime',
+      icon: () => <span className="text-2xl font-bold">C</span>,
+      color: 'bg-teal-50 border-teal-200 text-teal-700',
+      hoverColor: 'hover:bg-teal-100',
       type: 'qr' as const
     }
   ];
@@ -247,81 +247,81 @@ export default function PaymentsPage() {
     <AppLayout>
       <div className="min-h-screen bg-slate-100 dark:bg-gray-900">
         {/* Page Title */}
-        <div className="px-4 pt-4 pb-2">
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{t('payments.admin_title')}</h1>
-          <p className="text-slate-600 dark:text-gray-300">{t('payments.admin_description')}</p>
+        <div className="px-3 sm:px-4 pt-3 sm:pt-4 pb-2">
+          <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-slate-900 dark:text-white">{t('payments.admin_title')}</h1>
+          <p className="text-xs sm:text-sm lg:text-base text-slate-600 dark:text-gray-300">{t('payments.admin_description')}</p>
         </div>
 
         {/* Blue Gradient Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-800 dark:to-blue-900 text-white px-4 py-6 mx-4 rounded-lg">
+        <div className="bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-800 dark:to-blue-900 text-white px-3 sm:px-4 py-3 sm:py-4 lg:py-6 mx-3 sm:mx-4 rounded-lg">
         {/* User Profile Section */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center">
-              <BarChart3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+        <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4 lg:mb-6">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center flex-shrink-0">
+              <BarChart3 className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-blue-600 dark:text-blue-400" />
             </div>
-            <div>
-              <div className="text-sm font-medium payment-header-text">{user.email}</div>
+            <div className="min-w-0 flex-1">
+              <div className="text-xs sm:text-sm font-medium payment-header-text truncate">{user.email}</div>
               <div className="text-xs payment-header-text opacity-90">{user.phone}</div>
             </div>
           </div>
-          <Button className="bg-yellow-500 hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-700 text-black dark:text-white px-3 py-1 rounded-lg flex items-center space-x-1">
-            <Crown className="h-4 w-4" />
-            <span className="text-sm font-medium">{user.level}</span>
-            <ArrowRight className="h-3 w-3" />
+          <Button className="bg-yellow-500 hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-700 text-black dark:text-white px-2 sm:px-3 py-1.5 sm:py-1 rounded-lg flex items-center justify-center space-x-1 w-full sm:w-auto text-xs sm:text-sm">
+            <Crown className="h-3 w-3 sm:h-4 sm:w-4" />
+            <span className="text-xs sm:text-sm font-medium">{user.level}</span>
+            <ArrowRight className="h-2 w-2 sm:h-3 sm:w-3" />
           </Button>
         </div>
 
         {/* Balance Display */}
-        <div className="bg-blue-800 dark:bg-blue-900 rounded-lg p-4">
+        <div className="bg-blue-800 dark:bg-blue-900 rounded-lg p-3 sm:p-4">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center space-x-2">
-              <Wallet className="h-5 w-5 payment-balance-text" />
-              <span className="text-sm font-medium payment-balance-text">{t('payments.balance')}</span>
-              <RefreshCw className="h-4 w-4 cursor-pointer hover:rotate-180 transition-transform payment-balance-text" />
+              <Wallet className="h-4 w-4 sm:h-5 sm:w-5 payment-balance-text" />
+              <span className="text-xs sm:text-sm font-medium payment-balance-text">{t('payments.balance')}</span>
+              <RefreshCw className="h-3 w-3 sm:h-4 sm:w-4 cursor-pointer hover:rotate-180 transition-transform payment-balance-text" />
             </div>
           </div>
-          <div className="text-2xl font-bold payment-balance-text">{formatCurrency(user.balance)}</div>
+          <div className="text-lg sm:text-xl lg:text-2xl font-bold payment-balance-text">{formatCurrency(user.balance)}</div>
         </div>
       </div>
 
         {/* Main Content */}
-        <div className="px-4 -mt-2">
+        <div className="px-3 sm:px-4 -mt-1 sm:-mt-2">
           {/* Quick Action Buttons */}
-          <div className="grid grid-cols-4 gap-3 mb-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-4 sm:mb-6">
             {quickActions.map((action) => (
               <Button
                 key={action.id}
-                className={`${action.color} hover:opacity-90 text-white h-20 flex flex-col items-center justify-center space-y-2 rounded-lg transition-all duration-200 hover:scale-105 dark:opacity-90 dark:hover:opacity-100`}
+                className={`${action.color} hover:opacity-90 text-white h-12 sm:h-16 lg:h-20 flex flex-col items-center justify-center space-y-1 sm:space-y-2 rounded-lg transition-all duration-200 hover:scale-105 dark:opacity-90 dark:hover:opacity-100`}
                 onClick={() => handleQuickAction(action.id)}
               >
-                <action.icon className="h-6 w-6" />
-                <span className="text-xs font-medium">{action.name}</span>
+                <action.icon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
+                <span className="text-xs font-medium text-center leading-tight">{action.name}</span>
               </Button>
             ))}
           </div>
 
           {/* Account Records List */}
-          <Card className="mb-6 bg-white dark:bg-gray-800 shadow-sm border border-slate-200 dark:border-gray-700">
+          <Card className="mb-4 sm:mb-6 bg-white dark:bg-gray-800 shadow-sm border border-slate-200 dark:border-gray-700">
             <CardContent className="p-0">
               {accountRecords.map((record, index) => (
                 <div
                   key={record.id}
-                  className={`flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors ${
+                  className={`flex items-center justify-between p-3 sm:p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors ${
                     index !== accountRecords.length - 1 ? 'border-b border-slate-100 dark:border-gray-700' : ''
                   }`}
                   onClick={() => handleAccountRecord(record.id)}
                 >
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-slate-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                      <record.icon className="h-4 w-4 text-slate-600 dark:text-gray-300" />
+                  <div className="flex items-center space-x-2 sm:space-x-3">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-slate-100 dark:bg-gray-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <record.icon className="h-3 w-3 sm:h-4 sm:w-4 text-slate-600 dark:text-gray-300" />
                     </div>
-                    <div>
-                      <div className="font-medium payment-content-text dark:text-white">{record.name}</div>
-                      <div className="text-xs text-slate-500 dark:text-gray-400">{record.description}</div>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-medium payment-content-text dark:text-white text-sm sm:text-base truncate">{record.name}</div>
+                      <div className="text-xs text-slate-500 dark:text-gray-400 truncate">{record.description}</div>
                     </div>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-slate-400 dark:text-gray-500" />
+                  <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 text-slate-400 dark:text-gray-500 flex-shrink-0" />
                 </div>
               ))}
             </CardContent>
@@ -536,10 +536,10 @@ export default function PaymentsPage() {
 
           {/* Payment Form (when recharge is selected) */}
           {showPaymentForm && (
-            <Card className="mb-6 bg-white shadow-sm border border-slate-200">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-slate-900">Payment Details</h3>
+            <Card className="mb-4 sm:mb-6 bg-white shadow-sm border border-slate-200">
+              <CardContent className="p-3 sm:p-4 lg:p-6">
+                <div className="flex items-center justify-between mb-3 sm:mb-4">
+                  <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-slate-900">Payment Details</h3>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -547,16 +547,17 @@ export default function PaymentsPage() {
                       setShowPaymentForm(false);
                       setActiveSection(null);
                     }}
+                    className="p-1 sm:p-2"
                   >
                     ×
                   </Button>
                 </div>
               
                 {/* Amount Input */}
-                <div className="space-y-2 mb-4">
-                  <Label htmlFor="amount">Payment Amount</Label>
+                <div className="space-y-2 mb-3 sm:mb-4">
+                  <Label htmlFor="amount" className="text-xs sm:text-sm">Payment Amount</Label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                    <span className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm sm:text-base">$</span>
                     <Input
                       id="amount"
                       type="number"
@@ -564,15 +565,15 @@ export default function PaymentsPage() {
                       min="0"
                       value={amount || ''}
                       onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
-                      className="pl-8"
+                      className="pl-6 sm:pl-8 text-sm sm:text-base h-8 sm:h-10"
                       placeholder="0.00"
                     />
                   </div>
                 </div>
 
                 {/* Client Selection */}
-                <div className="space-y-2 mb-4">
-                  <Label htmlFor="client">Select Client</Label>
+                <div className="space-y-2 mb-3 sm:mb-4">
+                  <Label htmlFor="client" className="text-xs sm:text-sm">Select Client</Label>
                   <Select 
                     value={clientId} 
                     onValueChange={(value) => {
@@ -591,22 +592,22 @@ export default function PaymentsPage() {
                 </div>
 
                 {/* Payment Method Selection */}
-                <div className="space-y-2 mb-4">
-                  <Label>Payment Method</Label>
-                  <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2 mb-3 sm:mb-4">
+                  <Label className="text-xs sm:text-sm">Payment Method</Label>
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
                     {paymentMethods.map((method) => (
                       <button
                         key={method.id}
                         onClick={() => setSelectedMethod(method.id)}
-                        className={`p-4 border-2 rounded-lg text-center transition-all duration-200 ${method.color} dark:${method.color.replace('50', '900/20').replace('200', '800')} ${method.hoverColor} dark:hover:bg-opacity-30 ${
-                          selectedMethod === method.id ? 'ring-2 ring-blue-500 dark:ring-blue-400 ring-offset-2' : ''
+                        className={`p-2 sm:p-3 lg:p-4 border-2 rounded-lg text-center transition-all duration-200 ${method.color} dark:${method.color.replace('50', '900/20').replace('200', '800')} ${method.hoverColor} dark:hover:bg-opacity-30 ${
+                          selectedMethod === method.id ? 'ring-2 ring-blue-500 dark:ring-blue-400 ring-offset-1 sm:ring-offset-2' : ''
                         }`}
                       >
-                        <div className="text-2xl font-bold mb-2">
+                        <div className="text-lg sm:text-xl lg:text-2xl font-bold mb-1 sm:mb-2">
                           <method.icon />
                         </div>
-                        <div className="font-semibold text-sm">{method.name}</div>
-                        <div className="text-xs opacity-75 mt-1">{method.description}</div>
+                        <div className="font-semibold text-xs sm:text-sm">{method.name}</div>
+                        <div className="text-xs opacity-75 mt-1 hidden sm:block">{method.description}</div>
                       </button>
                     ))}
                   </div>
@@ -614,12 +615,12 @@ export default function PaymentsPage() {
 
                 {/* Payment Summary */}
                 {amount > 0 && selectedClient && selectedMethod && (
-                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg mb-4">
-                    <h4 className="font-medium mb-2 text-gray-900 dark:text-white">Payment Summary</h4>
-                    <div className="space-y-1 text-sm text-gray-700 dark:text-gray-300">
+                  <div className="bg-gray-50 dark:bg-gray-800 p-3 sm:p-4 rounded-lg mb-3 sm:mb-4">
+                    <h4 className="font-medium mb-2 text-gray-900 dark:text-white text-sm sm:text-base">Payment Summary</h4>
+                    <div className="space-y-1 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
                       <div className="flex justify-between">
                         <span>Client:</span>
-                        <span className="font-medium">{selectedClient.name}</span>
+                        <span className="font-medium truncate ml-2">{selectedClient.name}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Amount:</span>
@@ -627,7 +628,7 @@ export default function PaymentsPage() {
                       </div>
                       <div className="flex justify-between">
                         <span>Method:</span>
-                        <span className="font-medium">
+                        <span className="font-medium truncate ml-2">
                           {paymentMethods.find(m => m.id === selectedMethod)?.name}
                         </span>
                       </div>

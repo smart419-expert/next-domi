@@ -47,14 +47,6 @@ export function Payments() {
       description: 'Pay securely with PayPal'
     },
     {
-      id: 'bank',
-      name: 'Bank Transfer',
-      icon: '🏦',
-      color: 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300',
-      hoverColor: 'hover:bg-gray-100 dark:hover:bg-gray-700',
-      description: 'Direct bank transfer'
-    },
-    {
       id: 'zelle',
       name: 'Zelle',
       icon: 'Z',
@@ -69,6 +61,14 @@ export function Payments() {
       color: 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-700 dark:text-green-300',
       hoverColor: 'hover:bg-green-100 dark:hover:bg-green-900/30',
       description: 'Pay with Cash App'
+    },
+    {
+      id: 'chime',
+      name: 'Chime',
+      icon: 'C',
+      color: 'bg-teal-50 dark:bg-teal-900/20 border-teal-200 dark:border-teal-800 text-teal-700 dark:text-teal-300',
+      hoverColor: 'hover:bg-teal-100 dark:hover:bg-teal-900/30',
+      description: 'Banking with Chime'
     }
   ];
 
@@ -227,16 +227,16 @@ export function Payments() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
         <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">Total de Depósitos</CardTitle>
-            <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-3 sm:px-6 pt-3 sm:pt-6">
+            <CardTitle className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white">Total de Depósitos</CardTitle>
+            <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 text-green-600 dark:text-green-400" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+          <CardContent className="px-3 sm:px-6 pb-3 sm:pb-6">
+            <div className="text-lg sm:text-xl lg:text-2xl font-bold text-green-600 dark:text-green-400">
               ${totalDeposits.toLocaleString()}
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400">De todos los tiempos</p>
@@ -244,12 +244,12 @@ export function Payments() {
         </Card>
 
         <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">Total de Retiros</CardTitle>
-            <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-3 sm:px-6 pt-3 sm:pt-6">
+            <CardTitle className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white">Total de Retiros</CardTitle>
+            <TrendingDown className="h-3 w-3 sm:h-4 sm:w-4 text-red-600 dark:text-red-400" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-red-600 dark:text-red-400">
+          <CardContent className="px-3 sm:px-6 pb-3 sm:pb-6">
+            <div className="text-lg sm:text-xl lg:text-2xl font-bold text-red-600 dark:text-red-400">
               ${totalWithdrawals.toLocaleString()}
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400">De todos los tiempos</p>
@@ -257,12 +257,12 @@ export function Payments() {
         </Card>
 
         <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">Cantidad Neta</CardTitle>
-            <DollarSign className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-3 sm:px-6 pt-3 sm:pt-6">
+            <CardTitle className="text-xs sm:text-sm font-medium text-gray-900 dark:text-white">Cantidad Neta</CardTitle>
+            <DollarSign className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600 dark:text-blue-400" />
           </CardHeader>
-          <CardContent>
-            <div className={`text-2xl font-bold ${netAmount >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+          <CardContent className="px-3 sm:px-6 pb-3 sm:pb-6">
+            <div className={`text-lg sm:text-xl lg:text-2xl font-bold ${netAmount >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
               ${netAmount.toLocaleString()}
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400">Posición neta</p>
@@ -272,28 +272,28 @@ export function Payments() {
 
       {/* Wallet Selection */}
       <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-        <CardHeader>
-          <CardTitle className="flex items-center text-gray-900 dark:text-white">
-            <Wallet className="h-5 w-5 mr-2" />
+        <CardHeader className="px-3 sm:px-6 pt-3 sm:pt-6">
+          <CardTitle className="flex items-center text-gray-900 dark:text-white text-sm sm:text-base">
+            <Wallet className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
             Elegir Método de Pago
           </CardTitle>
-          <CardDescription className="text-gray-600 dark:text-gray-300">
+          <CardDescription className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm">
             Selecciona tu método de pago preferido para continuar
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <CardContent className="px-3 sm:px-6 pb-3 sm:pb-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
             {walletOptions.map((wallet) => (
               <button
                 key={wallet.id}
                 onClick={() => setSelectedWallet(wallet.id)}
-                className={`p-6 border-2 rounded-lg text-center transition-all duration-200 ${wallet.color} dark:${wallet.color.replace('50', '900/20').replace('200', '800')} ${wallet.hoverColor} dark:hover:bg-opacity-30 ${
-                  selectedWallet === wallet.id ? 'ring-2 ring-blue-500 dark:ring-blue-400 ring-offset-2' : ''
+                className={`p-3 sm:p-4 lg:p-6 border-2 rounded-lg text-center transition-all duration-200 ${wallet.color} dark:${wallet.color.replace('50', '900/20').replace('200', '800')} ${wallet.hoverColor} dark:hover:bg-opacity-30 ${
+                  selectedWallet === wallet.id ? 'ring-2 ring-blue-500 dark:ring-blue-400 ring-offset-1 sm:ring-offset-2' : ''
                 }`}
               >
-                <div className="text-2xl font-bold mb-2">{wallet.icon}</div>
-                <div className="font-semibold text-sm">{wallet.name}</div>
-                <div className="text-xs opacity-75 mt-1">{wallet.description}</div>
+                <div className="text-lg sm:text-xl lg:text-2xl font-bold mb-1 sm:mb-2">{wallet.icon}</div>
+                <div className="font-semibold text-xs sm:text-sm">{wallet.name}</div>
+                <div className="text-xs opacity-75 mt-1 hidden sm:block">{wallet.description}</div>
               </button>
             ))}
           </div>
@@ -302,86 +302,98 @@ export function Payments() {
 
       {/* Payment Actions */}
       <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="flex items-center text-gray-900 dark:text-white">
-                <CreditCard className="h-5 w-5 mr-2" />
+        <CardHeader className="px-3 sm:px-6 pt-3 sm:pt-6">
+          <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex-1 min-w-0">
+              <CardTitle className="flex items-center text-gray-900 dark:text-white text-sm sm:text-lg lg:text-xl">
+                <CreditCard className="h-4 w-4 sm:h-5 sm:w-5 mr-2 flex-shrink-0" />
                 Payment Management
               </CardTitle>
-              <CardDescription className="text-gray-600 dark:text-gray-300">
+              <CardDescription className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm lg:text-base">
                 Manage your payments and view transaction history
               </CardDescription>
             </div>
-            <div className="flex space-x-2">
-              <Button variant="outline" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
-                <Download className="h-4 w-4 mr-2" />
-                Export
+            <div className="flex flex-wrap gap-2">
+              <Button variant="outline" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2">
+                <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Export</span>
+                <span className="sm:hidden">Export</span>
               </Button>
               <Button 
                 variant="outline" 
                 onClick={() => setShowWithdrawModal(true)}
-                className="text-red-600 dark:text-red-400 border-red-200 dark:border-red-800 hover:bg-red-50 dark:hover:bg-red-900/20"
+                className="text-red-600 dark:text-red-400 border-red-200 dark:border-red-800 hover:bg-red-50 dark:hover:bg-red-900/20 text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2"
               >
-                <ArrowUpRight className="h-4 w-4 mr-2" />
-                Withdraw
+                <ArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Withdraw</span>
+                <span className="sm:hidden">Withdraw</span>
               </Button>
-              <Button onClick={() => setShowNewPayment(true)} disabled={!selectedWallet} className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white">
-                <Plus className="h-4 w-4 mr-2" />
-                New Payment
+              <Button onClick={() => setShowNewPayment(true)} disabled={!selectedWallet} className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2">
+                <Plus className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">New Payment</span>
+                <span className="sm:hidden">New</span>
               </Button>
             </div>
           </div>
         </CardHeader>
-        <CardContent>
-          <div className="flex flex-col sm:flex-row gap-4">
+        <CardContent className="px-3 sm:px-6 pb-3 sm:pb-6">
+          <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
+              <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 h-3 w-3 sm:h-4 sm:w-4 text-gray-400 dark:text-gray-500" />
               <Input
                 placeholder="Search payments..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                className="pl-7 sm:pl-10 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-xs sm:text-sm h-8 sm:h-10"
               />
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-1 sm:gap-2">
               <Button
                 variant={filterStatus === 'all' ? 'default' : 'outline'}
                 onClick={() => setFilterStatus('all')}
-                className={filterStatus === 'all' 
-                  ? 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white' 
-                  : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
-                }
+                size="sm"
+                className={`text-xs sm:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-7 sm:h-8 ${
+                  filterStatus === 'all' 
+                    ? 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white' 
+                    : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                }`}
               >
                 All
               </Button>
               <Button
                 variant={filterStatus === 'completed' ? 'default' : 'outline'}
                 onClick={() => setFilterStatus('completed')}
-                className={filterStatus === 'completed' 
-                  ? 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white' 
-                  : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
-                }
+                size="sm"
+                className={`text-xs sm:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-7 sm:h-8 ${
+                  filterStatus === 'completed' 
+                    ? 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white' 
+                    : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                }`}
               >
-                Completed
+                <span className="hidden sm:inline">Completed</span>
+                <span className="sm:hidden">Done</span>
               </Button>
               <Button
                 variant={filterStatus === 'pending' ? 'default' : 'outline'}
                 onClick={() => setFilterStatus('pending')}
-                className={filterStatus === 'pending' 
-                  ? 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white' 
-                  : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
-                }
+                size="sm"
+                className={`text-xs sm:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-7 sm:h-8 ${
+                  filterStatus === 'pending' 
+                    ? 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white' 
+                    : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                }`}
               >
                 Pending
               </Button>
               <Button
                 variant={filterStatus === 'failed' ? 'default' : 'outline'}
                 onClick={() => setFilterStatus('failed')}
-                className={filterStatus === 'failed' 
-                  ? 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white' 
-                  : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
-                }
+                size="sm"
+                className={`text-xs sm:text-sm px-2 sm:px-3 py-1 sm:py-1.5 h-7 sm:h-8 ${
+                  filterStatus === 'failed' 
+                    ? 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white' 
+                    : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                }`}
               >
                 Failed
               </Button>
@@ -392,38 +404,38 @@ export function Payments() {
 
       {/* Payment History */}
       <Card>
-        <CardHeader>
-          <CardTitle>Payment History</CardTitle>
-          <CardDescription>
+        <CardHeader className="px-3 sm:px-6 pt-3 sm:pt-6">
+          <CardTitle className="text-sm sm:text-base">Payment History</CardTitle>
+          <CardDescription className="text-xs sm:text-sm">
             Your recent payment transactions and status
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
+        <CardContent className="px-3 sm:px-6 pb-3 sm:pb-6">
+          <div className="space-y-3 sm:space-y-4">
             {filteredPayments.map((payment) => (
               <div
                 key={payment.id}
-                className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
               >
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center space-x-2">
+                <div className="flex items-start space-x-3 flex-1 min-w-0">
+                  <div className="flex items-center space-x-2 flex-shrink-0">
                     {getTypeIcon(payment.type)}
                     {getStatusIcon(payment.status)}
                   </div>
-                  <div>
-                    <h4 className="font-medium text-gray-900">{payment.description}</h4>
-                    <p className="text-sm text-gray-500">
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-medium text-gray-900 dark:text-white text-xs sm:text-sm lg:text-base truncate">{payment.description}</h4>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                       {payment.method} • {payment.reference}
                     </p>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-gray-400 dark:text-gray-500">
                       {new Date(payment.date).toLocaleDateString()}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-4">
-                  <div className="text-right">
-                    <div className={`font-semibold text-gray-900 ${
-                      payment.type === 'deposit' ? 'text-green-600' : 'text-red-600'
+                <div className="flex items-center justify-between sm:justify-end space-x-2">
+                  <div className="text-left sm:text-right">
+                    <div className={`font-semibold text-xs sm:text-sm lg:text-base ${
+                      payment.type === 'deposit' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
                     }`}>
                       {payment.type === 'deposit' ? '+' : '-'}${payment.amount.toLocaleString()}
                     </div>
@@ -432,11 +444,11 @@ export function Payments() {
                     </span>
                   </div>
                   <div className="flex space-x-1">
-                    <Button variant="ghost" size="sm">
-                      <Eye className="h-4 w-4" />
+                    <Button variant="ghost" size="sm" className="p-1.5 sm:p-2">
+                      <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
                     </Button>
-                    <Button variant="ghost" size="sm">
-                      <Download className="h-4 w-4" />
+                    <Button variant="ghost" size="sm" className="p-1.5 sm:p-2">
+                      <Download className="h-3 w-3 sm:h-4 sm:w-4" />
                     </Button>
                   </div>
                 </div>

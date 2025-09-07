@@ -65,13 +65,13 @@ export function Header({ onMenuClick, isSidebarOpen, className }: HeaderProps) {
           <Menu className="h-5 w-5" />
         </Button>
         
-        <div className="flex items-center space-x-2 flex-1 min-w-0">
-          <div className="relative w-full max-w-xs">
+        <div className="flex items-center space-x-2">
+          <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
               type="text"
               placeholder="Search..."
-              className="pl-10 pr-4 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full text-slate-900 placeholder-slate-400"
+              className="pl-10 pr-4 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-auto text-slate-900 placeholder-slate-400 sm:w-64"
             />
           </div>
         </div>
@@ -89,7 +89,7 @@ export function Header({ onMenuClick, isSidebarOpen, className }: HeaderProps) {
         <div className="hidden md:flex items-center space-x-2">
           <Button
             variant="ghost"
-            size="sm"
+            size="sm" 
             className="relative text-slate-500 hover:text-slate-700"
             aria-label={`Notifications (${notifications} unread)`}
           >
@@ -162,6 +162,7 @@ export function Header({ onMenuClick, isSidebarOpen, className }: HeaderProps) {
                 </span>
               )}
             </div>
+            <ChevronDown className={`h-4 w-4 text-slate-500 transition-transform duration-200 ${showUserDropdown ? 'rotate-180' : ''}`} />
           </Button>
 
           {/* Dropdown Menu */}

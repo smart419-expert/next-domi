@@ -258,7 +258,7 @@ export function ChatWindow({ clientId, clientName, className }: ChatWindowProps)
         </CardHeader>
 
         <CardContent className="p-0 flex-1 overflow-hidden">
-          <div ref={chatContainerRef} className="h-auto">
+          <div ref={chatContainerRef} className="h-full">
             {settings.useMockChat ? (
               <MockChat
                 clientId={clientId}
